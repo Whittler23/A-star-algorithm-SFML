@@ -6,7 +6,7 @@ Tile::Tile(const sf::Vector2f& position, const int size)
 {
 	mTileImage.setPosition(position);
 	mTileImage.setOutlineColor(sf::Color::Black);
-	mTileImage.setOutlineThickness(1.f);
+	mTileImage.setOutlineThickness(mTileSize/10.f);
 	mTileImage.setFillColor(sf::Color::Red);
 }
 

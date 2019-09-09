@@ -6,7 +6,12 @@
 int main()
 {
 	sf::RenderWindow appWindow(sf::VideoMode(600, 400), "AStar");
-	Grid mGrid(20, 20, 50);
+
+	const int mWidthOfTheGrid = 20;
+	const int mHeightOfTheGrid = 10;
+	const int mSizeOfTheTiles = 20;
+
+	Grid mGrid(mWidthOfTheGrid, mHeightOfTheGrid, mSizeOfTheTiles);
 
 	while (true)
 	{
