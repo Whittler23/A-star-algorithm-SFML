@@ -1,24 +1,57 @@
-#include <iostream>
-#include <SFML/Graphics.hpp>
+#include "application.hpp"
 
-#include "grid.hpp"
+const int mWidthOfTheGrid = 20;
+const int mHeightOfTheGrid = 10;
+const int mSizeOfTheTiles = 20;
 
-int main()
+Application::Application()
+	:mWindow(sf::VideoMode::getDesktopMode(), "AStar")
+	,mGrid(mWidthOfTheGrid, mHeightOfTheGrid, mSizeOfTheTiles)
+	,mExit(false)
 {
-	sf::RenderWindow appWindow(sf::VideoMode(600, 400), "AStar");
+}
 
-	const int mWidthOfTheGrid = 20;
-	const int mHeightOfTheGrid = 10;
-	const int mSizeOfTheTiles = 20;
-
-	Grid mGrid(mWidthOfTheGrid, mHeightOfTheGrid, mSizeOfTheTiles);
-
-	while (true)
+void Application::run()
+{
+	while (mExit != true)
 	{
-		appWindow.clear();
-		appWindow.draw(mGrid);
-		appWindow.display();
+		processEvents();
+		getInput();
+		update();
+		draw();
 	}
-	
-	std::cout << "Hello world!" << std::endl;
+}
+
+void Application::update()
+{
+	//mGrid.update();
+}
+
+void Application::getInput()
+{
+	//eventsHandling();
+}
+
+void Application::draw()
+{
+	mWindow.clear();
+	mWindow.draw(mGrid);
+	mWindow.display();
+}
+
+void Application::processEvents()
+{
+	sf::Event event;
+	while (mWindow.pollEvent(event))
+	{
+		switch (event.type)
+		{
+		case sf::Event::Closed:
+			mExit = true;
+			break;
+		case sf::Event::Resized:
+			sf::FloatRect fixedView(0, 0, event.size.width, event.size.height);
+			mWindow.setView(sf::View(fixedView));
+		}
+	}
 }
