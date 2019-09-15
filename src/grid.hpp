@@ -22,6 +22,7 @@ public:
 
 private:
 	void createGrid();
+	void restartGrid();
 	Tile* getPressedNode(const sf::Vector2f pressPosition);
 	bool isPositionProper(const sf::Vector2f position);
 

@@ -5,10 +5,12 @@ const int mHeightOfTheGrid = 10;
 const int mSizeOfTheTiles = 20;
 
 Application::Application()
-	:mWindow(sf::VideoMode::getDesktopMode(), "AStar")
+	:mWindow(sf::VideoMode(1600, 900), "AStar")
 	,mGrid(mWidthOfTheGrid, mHeightOfTheGrid, mSizeOfTheTiles)
 	,mExit(false)
 {
+	sf::FloatRect viewSize = { 0, 0, mSizeOfTheTiles * mWidthOfTheGrid, mSizeOfTheTiles * mHeightOfTheGrid};
+	mWindow.setView(sf::View(viewSize));
 }
 
 void Application::run()
@@ -16,7 +18,6 @@ void Application::run()
 	while (mExit != true)
 	{
 		processEvents();
-		getInput();
 		update();
 		draw();
 	}
@@ -25,11 +26,6 @@ void Application::run()
 void Application::update()
 {
 	//mGrid.update();
-}
-
-void Application::getInput()
-{
-	//eventsHandling();
 }
 
 void Application::draw()
@@ -43,33 +39,25 @@ void Application::processEvents()
 
 {
 	sf::Event event;
-
-	processApplicationEvents(event);
-	mGrid.processEvents(event, mMousePositions);
-	//mGui.processEvents(event);
+	while (mWindow.pollEvent(event))
+	{
+		processApplicationEvents(event);
+		mGrid.processEvents(event, mMousePositions);
+		//mGui.processEvents(event);
+	}
 }
 
 void Application::processApplicationEvents(sf::Event& event)
 {
-	while (mWindow.pollEvent(event))
+	switch (event.type)
 	{
-		switch (event.type)
-		{
-		case sf::Event::Closed:
-			mExit = true;
-			break;
+	case sf::Event::Closed:
+		mExit = true;
+		break;
 
-		case sf::Event::Resized:
-		{
-			sf::FloatRect fixedView(0, 0, event.size.width, event.size.height);
-			mWindow.setView(sf::View(fixedView));
-			break;
-		}
-
-		case sf::Event::MouseMoved:
-			mMousePositions.mMouseViewPosition = sf::Mouse::getPosition(mWindow);
-			mMousePositions.mMouseWorldPosition = mWindow.mapPixelToCoords(mMousePositions.mMouseViewPosition);
-			break;
-		}
+	case sf::Event::MouseMoved:
+		mMousePositions.mMouseViewPosition = sf::Mouse::getPosition(mWindow);
+		mMousePositions.mMouseWorldPosition = mWindow.mapPixelToCoords(mMousePositions.mMouseViewPosition);
+		break;
 	}
 }

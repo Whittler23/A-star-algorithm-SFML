@@ -20,7 +20,6 @@ public:
 private:
 	void update();
 	void draw();
-	void getInput();
 
 	void processEvents();
 	void processApplicationEvents(sf::Event& event);

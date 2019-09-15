@@ -29,9 +29,11 @@ void Grid::processEvents(sf::Event& event, MousePositions& mousePositions)
 			setStartingNode(getPressedNode(mousePositions.mMouseWorldPosition));
 		else if (event.mouseButton.button == sf::Mouse::Right)
 			setTargetedNode(getPressedNode(mousePositions.mMouseWorldPosition));
+		break;
 	case sf::Event::KeyPressed:
 		if (event.key.code == sf::Keyboard::R)
-			createGrid();
+			restartGrid();
+		break;
 	}
 
 }
@@ -41,6 +43,14 @@ void Grid::createGrid()
 	for (int i = 0; i < mGridSizeX; ++i)
 		for (int ii = 0; ii < mGridSizeY; ++ii)
 			mTiles.emplace_back(std::make_unique<Tile>(sf::Vector2f(i * mTileSize, ii * mTileSize), mTileSize));
+}
+
+void Grid::restartGrid()
+{
+	mStartingNode = nullptr;
+	mTargetedNode = nullptr;
+	mTiles.clear();
+	createGrid();
 }
 
 bool Grid::isPositionProper(const sf::Vector2f position)
@@ -62,11 +72,19 @@ Tile* Grid::getPressedNode(const sf::Vector2f pressPosition)
 
 void Grid::setStartingNode(Tile* const startingNode)
 {
+	if (mStartingNode != nullptr)
+		mStartingNode->setType(TileType::None);
+
 	mStartingNode = startingNode;
+	mStartingNode->setType(TileType::StartingTile);
 }
 
 void Grid::setTargetedNode(Tile* const targetedNode)
 {
+	if (mTargetedNode != nullptr)
+		mTargetedNode->setType(TileType::None);
+
 	mTargetedNode = targetedNode;
+	mTargetedNode->setType(TileType::TargetedTile);
 }
 
