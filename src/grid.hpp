@@ -23,6 +23,7 @@ public:
 private:
 	void createGrid();
 	Tile* getPressedNode(const sf::Vector2f pressPosition);
+	bool isPositionProper(const sf::Vector2f position);
 
 private:
 	int mGridSizeX;
