@@ -41,11 +41,12 @@ void Tile::reactToNodeType(NodeType nodeType)
 Node::Node(const sf::Vector2f& tilePosition, const int tileSize)
 	:mTile(tilePosition, tileSize)
 	,mNodeType(NodeType::None)
+	,mParentNode(nullptr)
 	,xGridPosition(tilePosition.x)
 	,yGridPosition(tilePosition.y)
-	,hCost(0)
-	,fCost(0)
-	,gCost(0)
+	,mHCost(0)
+	,mFCost(0)
+	,mGCost(0)
 {
 	mTile.reactToNodeType(mNodeType);
 }

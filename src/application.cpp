@@ -1,7 +1,7 @@
 #include "application.hpp"
 
-const int mWidthOfTheGrid = 16;
-const int mHeightOfTheGrid = 9;
+const int mWidthOfTheGrid = 25;
+const int mHeightOfTheGrid = 17;
 const int mSizeOfTheTiles = 10;
 
 Application::Application()
@@ -27,7 +27,7 @@ void Application::run()
 
 void Application::update()
 {
-	//mGrid.update();
+	mPathSolver.update();
 }
 
 void Application::draw()
@@ -38,14 +38,13 @@ void Application::draw()
 }
 
 void Application::processEvents()
-
 {
 	sf::Event event;
 	while (mWindow.pollEvent(event))
 	{
 		processApplicationEvents(event);
 		mGrid.processEvents(event, mMousePositions);
-		//mGui.processEvents(event);
+		mPathSolver.processEvents(event);
 	}
 }
 
@@ -61,5 +60,11 @@ void Application::processApplicationEvents(sf::Event& event)
 		mMousePositions.mMouseViewPosition = sf::Mouse::getPosition(mWindow);
 		mMousePositions.mMouseWorldPosition = mWindow.mapPixelToCoords(mMousePositions.mMouseViewPosition);
 		break;
+
+	case::sf::Event::KeyPressed:
+		if (event.key.code == sf::Keyboard::F)
+			mPathSolver.solveGrid(mGrid);
+		else if (event.key.code == sf::Keyboard::Escape)
+			mExit = true;
 	}
 }

@@ -14,19 +14,20 @@ class Grid : public sf::Drawable
 public:
 	Grid(int width, int height, int tileSize);
 	void draw(sf::RenderTarget& renderTarget, sf::RenderStates renderStates) const override;
+	void processEvents(sf::Event& event, MousePositions& mousePositions);
 
 	void setStartingNode(Node* const startingNode);
 	void setTargetedNode(Node* const targetedNode);
 
 	Node* getStartingNode() { return mStartingNode; }
-	void processEvents(sf::Event& event, MousePositions& mousePositions);
+	Node* getTargetedNode() { return mTargetedNode; }
 	std::vector<Node*> getNeighbours(Node* const node);
+	Node* getNodeInWorld(const sf::Vector2f);
 
 private:
 	void createGrid();
 	void restartGrid();
 	bool isPositionProper(const sf::Vector2f position);
-	Node* operator[](const sf::Vector2f);
 
 private:
 	int mGridSizeX;

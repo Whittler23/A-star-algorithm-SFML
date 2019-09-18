@@ -24,19 +24,21 @@ void Grid::processEvents(sf::Event& event, MousePositions& mousePositions)
 	switch (event.type)
 	{
 	case sf::Event::MouseButtonPressed:
+	{
 		if (!isPositionProper(mousePositions.mMouseWorldPosition))
 			return;
 		if (event.mouseButton.button == sf::Mouse::Left)
-			setStartingNode(this->operator[](mousePositions.mMouseWorldPosition));
+			setStartingNode(getNodeInWorld(mousePositions.mMouseWorldPosition));
 		else if (event.mouseButton.button == sf::Mouse::Right)
-			setTargetedNode(this->operator[](mousePositions.mMouseWorldPosition));
-		break;
+			setTargetedNode(getNodeInWorld(mousePositions.mMouseWorldPosition));
+	} break;
+
 	case sf::Event::KeyPressed:
+	{
 		if (event.key.code == sf::Keyboard::R)
 			restartGrid();
-		break;
+	} break;
 	}
-
 }
 
 void Grid::createGrid()
@@ -70,20 +72,18 @@ bool Grid::isPositionProper(const sf::Vector2f position)
 std::vector<Node*> Grid::getNeighbours(Node* const node)
 {
 	std::vector<Node*> neighbours;
-
 	for(int i = -1; i <= 1; ++i)
 		for (int b = -1; b <= 1; ++b)
 		{
 			if (i == 0 && b == 0) continue;
-			int nodePositionX = node->getPosition().x + mTileSize * i;
-			int nodePositionY = node->getPosition().y + mTileSize * b;
+			int nodePositionX = static_cast<int>(node->getPosition().x) + mTileSize * i;
+			int nodePositionY = static_cast<int>(node->getPosition().y) + mTileSize * b;
 			if (!isPositionProper(sf::Vector2f(nodePositionX, nodePositionY)))
 				continue;
 
-			Node* neighbour = this->operator[]((sf::Vector2f(nodePositionX, nodePositionY)));
+			Node* neighbour = getNodeInWorld(sf::Vector2f(nodePositionX, nodePositionY));
 			neighbours.emplace_back(neighbour);
 		}
-
 	return neighbours;
 }
 
@@ -103,14 +103,9 @@ void Grid::setTargetedNode(Node* const targetedNode)
 
 	mTargetedNode = targetedNode;
 	mTargetedNode->setType(NodeType::TargetedNode);
-
-	for (auto& node : mNodes)
-	{
-
-	}
 }
 
-Node* Grid::operator[](const sf::Vector2f position)
+Node* Grid::getNodeInWorld(const sf::Vector2f position)
 {
 	int xPosition = static_cast<int>(position.x) / mTileSize;
 	int yPosition = static_cast<int>(position.y) / mTileSize;

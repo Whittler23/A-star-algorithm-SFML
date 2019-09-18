@@ -1,6 +1,7 @@
 #pragma once
 
 #include "grid.hpp"
+#include "pathSolver.hpp"
 
 #include <SFML/Graphics.hpp>
 
@@ -28,5 +29,6 @@ private:
 	sf::RenderWindow mWindow;
 	MousePositions mMousePositions;
 	Grid mGrid;
+	PathSolver mPathSolver;
 	bool mExit;
 };

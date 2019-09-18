@@ -27,15 +27,25 @@ public:
 
 	void setType(NodeType nodeType);
 
+	void setParentNode(Node* const parentNode) { mParentNode = parentNode; }
+	void setFCost() { mFCost = mGCost + mHCost; }
+	void setGCost(const int gcost) { mGCost = gcost; }
+	void setHCost(const int hcost) { mHCost = hcost; }
+
+	int getFCost() { return mFCost; }
+	int getGCost() { return mGCost; }
+	int getHCost() { return mHCost; }
 	sf::Vector2f getPosition() { return sf::Vector2f(xGridPosition, yGridPosition); }
+
 	Tile& getNodeImage() { return mTile; }
 
 private:
 	NodeType mNodeType;
+	Node* mParentNode;
 	Tile mTile;
 	int xGridPosition;
 	int yGridPosition;
-	int gCost;
-	int hCost;
-	int fCost;
+	int mGCost;
+	int mHCost;
+	int mFCost;
 };
