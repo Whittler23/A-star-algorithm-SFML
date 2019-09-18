@@ -1,5 +1,6 @@
 #include "grid.hpp"
 #include "application.hpp"
+#include "node.hpp"
 #include <iostream>
 
 Grid::Grid(int width, int height, int tileSize)
@@ -14,8 +15,8 @@ Grid::Grid(int width, int height, int tileSize)
 
 void Grid::draw(sf::RenderTarget& renderTarget, sf::RenderStates renderStates) const
 {
-	for (auto& tile : mNodes)
-		renderTarget.draw(tile->getNodeImage());
+	for (auto& node : mNodes)
+		renderTarget.draw(node->getNodeImage());
 }
 
 void Grid::processEvents(sf::Event& event, MousePositions& mousePositions)
@@ -26,9 +27,9 @@ void Grid::processEvents(sf::Event& event, MousePositions& mousePositions)
 		if (!isPositionProper(mousePositions.mMouseWorldPosition))
 			return;
 		if (event.mouseButton.button == sf::Mouse::Left)
-			setStartingNode(getPressedNode(mousePositions.mMouseWorldPosition));
+			setStartingNode(this->operator[](mousePositions.mMouseWorldPosition));
 		else if (event.mouseButton.button == sf::Mouse::Right)
-			setTargetedNode(getPressedNode(mousePositions.mMouseWorldPosition));
+			setTargetedNode(this->operator[](mousePositions.mMouseWorldPosition));
 		break;
 	case sf::Event::KeyPressed:
 		if (event.key.code == sf::Keyboard::R)
@@ -55,19 +56,35 @@ void Grid::restartGrid()
 
 bool Grid::isPositionProper(const sf::Vector2f position)
 {
-	if (static_cast<int>(position.x) / mTileSize > mGridSizeX ||
-		static_cast<int>(position.y) / mTileSize > mGridSizeY)
+
+	int posX = static_cast<int>(position.x);
+	int posY = static_cast<int>(position.y);
+
+	if (posX > mTileSize * mGridSizeX || posX < 0 ||
+		posY > mTileSize* mGridSizeY || posY < 0)
 		return false;
 	else 
 		return true;
 }
 
-Node* Grid::getPressedNode(const sf::Vector2f pressPosition)
+std::vector<Node*> Grid::getNeighbours(Node* const node)
 {
-	int xPosition = static_cast<int>(pressPosition.x) / mTileSize;
-	int yPosition = static_cast<int>(pressPosition.y) / mTileSize;
-	int tilePosition = mGridSizeY * xPosition + yPosition;
-	return mNodes[tilePosition].get();
+	std::vector<Node*> neighbours;
+
+	for(int i = -1; i <= 1; ++i)
+		for (int b = -1; b <= 1; ++b)
+		{
+			if (i == 0 && b == 0) continue;
+			int nodePositionX = node->getPosition().x + mTileSize * i;
+			int nodePositionY = node->getPosition().y + mTileSize * b;
+			if (!isPositionProper(sf::Vector2f(nodePositionX, nodePositionY)))
+				continue;
+
+			Node* neighbour = this->operator[]((sf::Vector2f(nodePositionX, nodePositionY)));
+			neighbours.emplace_back(neighbour);
+		}
+
+	return neighbours;
 }
 
 void Grid::setStartingNode(Node* const startingNode)
@@ -76,7 +93,7 @@ void Grid::setStartingNode(Node* const startingNode)
 		mStartingNode->setType(NodeType::None);
 
 	mStartingNode = startingNode;
-	mStartingNode->setType(NodeType::StartingTile);
+	mStartingNode->setType(NodeType::StartingNode);
 }
 
 void Grid::setTargetedNode(Node* const targetedNode)
@@ -85,6 +102,19 @@ void Grid::setTargetedNode(Node* const targetedNode)
 		mTargetedNode->setType(NodeType::None);
 
 	mTargetedNode = targetedNode;
-	mTargetedNode->setType(NodeType::TargetedTile);
+	mTargetedNode->setType(NodeType::TargetedNode);
+
+	for (auto& node : mNodes)
+	{
+
+	}
+}
+
+Node* Grid::operator[](const sf::Vector2f position)
+{
+	int xPosition = static_cast<int>(position.x) / mTileSize;
+	int yPosition = static_cast<int>(position.y) / mTileSize;
+	int tilePosition = mGridSizeY * xPosition + yPosition;
+	return mNodes[tilePosition].get();
 }
 

@@ -1,13 +1,13 @@
 #pragma once
 
-#include "tile.hpp"
-
 #include <SFML/Graphics.hpp>
+#include "node.hpp"
 
 #include <vector>
 #include <memory>
 
 struct MousePositions;
+class Node;
 
 class Grid : public sf::Drawable
 {
@@ -20,12 +20,13 @@ public:
 
 	Node* getStartingNode() { return mStartingNode; }
 	void processEvents(sf::Event& event, MousePositions& mousePositions);
+	std::vector<Node*> getNeighbours(Node* const node);
 
 private:
 	void createGrid();
 	void restartGrid();
-	Node* getPressedNode(const sf::Vector2f pressPosition);
 	bool isPositionProper(const sf::Vector2f position);
+	Node* operator[](const sf::Vector2f);
 
 private:
 	int mGridSizeX;

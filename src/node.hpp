@@ -4,7 +4,7 @@
 
 enum class NodeType
 {
-	StartingTile, TargetedTile, PathTile, HoverTile, None
+	StartingNode, TargetedNode, PathNode, ObstacleNode, HoverNode, None
 };
 
 class Tile : public sf::Drawable, public sf::Transformable
@@ -26,9 +26,16 @@ public:
 	Node(const sf::Vector2f& tilePosition, const int tileSize);
 
 	void setType(NodeType nodeType);
+
+	sf::Vector2f getPosition() { return sf::Vector2f(xGridPosition, yGridPosition); }
 	Tile& getNodeImage() { return mTile; }
 
 private:
-	Tile mTile;
 	NodeType mNodeType;
+	Tile mTile;
+	int xGridPosition;
+	int yGridPosition;
+	int gCost;
+	int hCost;
+	int fCost;
 };

@@ -1,4 +1,4 @@
-#include "tile.hpp"
+#include "node.hpp"
 
 Tile::Tile(const sf::Vector2f& position, const int size)
 	:mTileImage(sf::Vector2f(size, size))
@@ -18,17 +18,20 @@ void Tile::reactToNodeType(NodeType nodeType)
 {
 	switch (nodeType)
 	{
-	case NodeType::StartingTile:
+	case NodeType::StartingNode:
 		mTileImage.setFillColor(sf::Color::Green);
 		break;
-	case NodeType::TargetedTile:
+	case NodeType::TargetedNode:
 		mTileImage.setFillColor(sf::Color::Red);
 		break;
-	case NodeType::PathTile:
+	case NodeType::PathNode:
 		mTileImage.setFillColor(sf::Color::Blue);
 		break;
-	case NodeType::HoverTile:
+	case NodeType::HoverNode:
 		mTileImage.setFillColor(sf::Color::Blue);
+		break;
+	case NodeType::ObstacleNode:
+		mTileImage.setFillColor(sf::Color::Black);
 		break;
 	case NodeType::None:
 		mTileImage.setFillColor(sf::Color::White);
@@ -38,6 +41,11 @@ void Tile::reactToNodeType(NodeType nodeType)
 Node::Node(const sf::Vector2f& tilePosition, const int tileSize)
 	:mTile(tilePosition, tileSize)
 	,mNodeType(NodeType::None)
+	,xGridPosition(tilePosition.x)
+	,yGridPosition(tilePosition.y)
+	,hCost(0)
+	,fCost(0)
+	,gCost(0)
 {
 	mTile.reactToNodeType(mNodeType);
 }

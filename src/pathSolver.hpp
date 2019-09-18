@@ -14,10 +14,11 @@ public:
 
 private:
 	void addStartingNode();
-	void addClosingNode();
+	void addTargetedNode();
 
 private:
 	Grid* mGridToSolve;
+	Node* mCurrent;
 	std::vector<Node*> mOpenNodes;
 	std::vector<Node*> mCloseNodes;
 	bool mSolved;

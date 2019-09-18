@@ -1,15 +1,17 @@
 #include "application.hpp"
 
-const int mWidthOfTheGrid = 20;
-const int mHeightOfTheGrid = 10;
-const int mSizeOfTheTiles = 20;
+const int mWidthOfTheGrid = 16;
+const int mHeightOfTheGrid = 9;
+const int mSizeOfTheTiles = 10;
 
 Application::Application()
 	:mWindow(sf::VideoMode(1600, 900), "AStar")
 	,mGrid(mWidthOfTheGrid, mHeightOfTheGrid, mSizeOfTheTiles)
 	,mExit(false)
 {
-	sf::FloatRect viewSize = { 0, 0, mSizeOfTheTiles * mWidthOfTheGrid, mSizeOfTheTiles * mHeightOfTheGrid};
+	float sizeX = mSizeOfTheTiles * mWidthOfTheGrid;
+	float sizeY = mSizeOfTheTiles * mHeightOfTheGrid;
+	sf::FloatRect viewSize = { 0, 0, sizeX, sizeY};
 	mWindow.setView(sf::View(viewSize));
 }
 

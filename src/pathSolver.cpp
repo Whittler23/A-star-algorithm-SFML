@@ -22,6 +22,7 @@ void PathSolver::addStartingNode()
 	mOpenNodes.emplace_back(mGridToSolve->getStartingNode());
 }
 
-void PathSolver::addClosingNode()
+void PathSolver::addTargetedNode()
 {
+
 }
