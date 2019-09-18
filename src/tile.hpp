@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
-enum class TileType
+enum class NodeType
 {
 	StartingTile, TargetedTile, PathTile, HoverTile, None
 };
@@ -13,10 +13,22 @@ public:
 	Tile(const sf::Vector2f& tilePosition, const int tileSize);
 
 	void draw(sf::RenderTarget& renderTarget, sf::RenderStates renderStates) const override;
-	void setType(TileType tileType);
+	void reactToNodeType(NodeType nodeType);
 
 private:
-	int mTileSize;
 	sf::RectangleShape mTileImage;
-	TileType mTileType;
+
+};
+
+class Node
+{
+public:
+	Node(const sf::Vector2f& tilePosition, const int tileSize);
+
+	void setType(NodeType nodeType);
+	Tile& getNodeImage() { return mTile; }
+
+private:
+	Tile mTile;
+	NodeType mNodeType;
 };

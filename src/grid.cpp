@@ -14,8 +14,8 @@ Grid::Grid(int width, int height, int tileSize)
 
 void Grid::draw(sf::RenderTarget& renderTarget, sf::RenderStates renderStates) const
 {
-	for (auto& tile : mTiles)
-		renderTarget.draw(*tile);
+	for (auto& tile : mNodes)
+		renderTarget.draw(tile->getNodeImage());
 }
 
 void Grid::processEvents(sf::Event& event, MousePositions& mousePositions)
@@ -42,14 +42,14 @@ void Grid::createGrid()
 {
 	for (int i = 0; i < mGridSizeX; ++i)
 		for (int ii = 0; ii < mGridSizeY; ++ii)
-			mTiles.emplace_back(std::make_unique<Tile>(sf::Vector2f(i * mTileSize, ii * mTileSize), mTileSize));
+			mNodes.emplace_back(std::make_unique<Node>(sf::Vector2f(i * mTileSize, ii * mTileSize), mTileSize));
 }
 
 void Grid::restartGrid()
 {
 	mStartingNode = nullptr;
 	mTargetedNode = nullptr;
-	mTiles.clear();
+	mNodes.clear();
 	createGrid();
 }
 
@@ -62,29 +62,29 @@ bool Grid::isPositionProper(const sf::Vector2f position)
 		return true;
 }
 
-Tile* Grid::getPressedNode(const sf::Vector2f pressPosition)
+Node* Grid::getPressedNode(const sf::Vector2f pressPosition)
 {
 	int xPosition = static_cast<int>(pressPosition.x) / mTileSize;
 	int yPosition = static_cast<int>(pressPosition.y) / mTileSize;
 	int tilePosition = mGridSizeY * xPosition + yPosition;
-	return mTiles[tilePosition].get();
+	return mNodes[tilePosition].get();
 }
 
-void Grid::setStartingNode(Tile* const startingNode)
+void Grid::setStartingNode(Node* const startingNode)
 {
 	if (mStartingNode != nullptr)
-		mStartingNode->setType(TileType::None);
+		mStartingNode->setType(NodeType::None);
 
 	mStartingNode = startingNode;
-	mStartingNode->setType(TileType::StartingTile);
+	mStartingNode->setType(NodeType::StartingTile);
 }
 
-void Grid::setTargetedNode(Tile* const targetedNode)
+void Grid::setTargetedNode(Node* const targetedNode)
 {
 	if (mTargetedNode != nullptr)
-		mTargetedNode->setType(TileType::None);
+		mTargetedNode->setType(NodeType::None);
 
 	mTargetedNode = targetedNode;
-	mTargetedNode->setType(TileType::TargetedTile);
+	mTargetedNode->setType(NodeType::TargetedTile);
 }
 

@@ -15,22 +15,23 @@ public:
 	Grid(int width, int height, int tileSize);
 	void draw(sf::RenderTarget& renderTarget, sf::RenderStates renderStates) const override;
 
-	void setStartingNode(Tile* const startingNode);
-	void setTargetedNode(Tile* const targetedNode);
+	void setStartingNode(Node* const startingNode);
+	void setTargetedNode(Node* const targetedNode);
 
+	Node* getStartingNode() { return mStartingNode; }
 	void processEvents(sf::Event& event, MousePositions& mousePositions);
 
 private:
 	void createGrid();
 	void restartGrid();
-	Tile* getPressedNode(const sf::Vector2f pressPosition);
+	Node* getPressedNode(const sf::Vector2f pressPosition);
 	bool isPositionProper(const sf::Vector2f position);
 
 private:
 	int mGridSizeX;
 	int mGridSizeY;
 	int mTileSize;
-	std::vector<std::unique_ptr<Tile>> mTiles;
-	Tile* mStartingNode;
-	Tile* mTargetedNode;
+	std::vector<std::unique_ptr<Node>> mNodes;
+	Node* mStartingNode;
+	Node* mTargetedNode;
 };

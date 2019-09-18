@@ -1,13 +1,12 @@
 #include "tile.hpp"
 
 Tile::Tile(const sf::Vector2f& position, const int size)
-	:mTileSize(size)
-	,mTileImage(sf::Vector2f(mTileSize, mTileSize))
-	,mTileType(TileType::None)
+	:mTileImage(sf::Vector2f(size, size))
 {
+	const float outlineThickness = size / 25.f;
 	mTileImage.setPosition(position);
 	mTileImage.setOutlineColor(sf::Color::Black);
-	mTileImage.setOutlineThickness(mTileSize/25.f);
+	mTileImage.setOutlineThickness(outlineThickness);
 }
 
 void Tile::draw(sf::RenderTarget& renderTarget, sf::RenderStates renderStates) const
@@ -15,27 +14,36 @@ void Tile::draw(sf::RenderTarget& renderTarget, sf::RenderStates renderStates) c
 	renderTarget.draw(mTileImage);
 }
 
-void Tile::setType(TileType tileType)
+void Tile::reactToNodeType(NodeType nodeType)
 {
-	mTileType = tileType;
-	switch (mTileType)
+	switch (nodeType)
 	{
-	case TileType::StartingTile:
+	case NodeType::StartingTile:
 		mTileImage.setFillColor(sf::Color::Green);
 		break;
-	case TileType::TargetedTile:
+	case NodeType::TargetedTile:
 		mTileImage.setFillColor(sf::Color::Red);
 		break;
-	case TileType::PathTile:
+	case NodeType::PathTile:
 		mTileImage.setFillColor(sf::Color::Blue);
 		break;
-	case TileType::HoverTile:
+	case NodeType::HoverTile:
 		mTileImage.setFillColor(sf::Color::Blue);
 		break;
-	case TileType::None:
+	case NodeType::None:
 		mTileImage.setFillColor(sf::Color::White);
-		break;
-	default:
-		break;
 	}
+}
+
+Node::Node(const sf::Vector2f& tilePosition, const int tileSize)
+	:mTile(tilePosition, tileSize)
+	,mNodeType(NodeType::None)
+{
+	mTile.reactToNodeType(mNodeType);
+}
+
+void Node::setType(NodeType nodeType)
+{
+	mNodeType = nodeType;
+	mTile.reactToNodeType(mNodeType);
 }
