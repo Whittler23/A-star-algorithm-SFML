@@ -20,6 +20,9 @@ private:
 
 	void processEvents();
 	void processApplicationEvents(sf::Event& event);
+	void processButtons();
+
+	void restart();
 
 private:
 	sf::RenderWindow mWindow;

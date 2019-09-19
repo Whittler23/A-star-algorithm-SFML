@@ -22,6 +22,7 @@ void Application::run()
 	while (mExit != true)
 	{
 		processEvents();
+		processButtons();
 		update();
 		draw();
 	}
@@ -47,9 +48,20 @@ void Application::processEvents()
 	while (mWindow.pollEvent(event))
 	{
 		processApplicationEvents(event);
-		mGrid.processEvents(event, mMousePositions);
 		mGui.processEvents(event, mMousePositions);
+		if(!mGui.getInteracted())
+			mGrid.processEvents(event, mMousePositions);
 	}
+}
+
+void Application::processButtons()
+{
+	if (mGui.isButtonPressed("EXIT"))
+		mExit = true;
+	else if (mGui.isButtonPressed("SOLVE"))
+		mPathSolver.solveGrid(mGrid);
+	else if (mGui.isButtonPressed("RESTART"))
+		restart();
 }
 
 void Application::processApplicationEvents(sf::Event& event)
@@ -65,15 +77,14 @@ void Application::processApplicationEvents(sf::Event& event)
 		mMousePositions.mMouseWorldPosition = mWindow.mapPixelToCoords(mMousePositions.mMouseViewPosition);
 		break;
 
-	case::sf::Event::KeyPressed:
-		if (event.key.code == sf::Keyboard::F)
-			mPathSolver.solveGrid(mGrid);
-		else if (event.key.code == sf::Keyboard::R)
-		{
-			mGrid.restartGrid();
-			mPathSolver.restartSolver();
-		}
-		else if (event.key.code == sf::Keyboard::Escape)
-			mExit = true;
+	case sf::Event::MouseButtonPressed:
+		if (mPathSolver.getSolved())
+			restart();
 	}
+}
+
+void Application::restart()
+{
+	mPathSolver.restartSolver();
+	mGrid.restartGrid();
 }

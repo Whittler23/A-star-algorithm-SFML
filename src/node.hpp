@@ -10,7 +10,7 @@ enum class NodeType
 class Tile : public sf::Drawable, public sf::Transformable
 {
 public:
-	Tile(const sf::Vector2f& tilePosition, const int tileSize);
+	Tile(const sf::Vector2i& tilePosition, const int tileSize);
 
 	void draw(sf::RenderTarget& renderTarget, sf::RenderStates renderStates) const override;
 	void reactToNodeType(NodeType nodeType);
@@ -23,19 +23,18 @@ private:
 class Node
 {
 public:
-	Node(const sf::Vector2f& tilePosition, const int tileSize);
+	Node(const sf::Vector2i& tilePosition, const int tileSize);
 
 	void setType(NodeType nodeType);
 
 	void setParentNode(Node* const parentNode) { mParentNode = parentNode; }
-	void setFCost() { mFCost = mGCost + mHCost; }
 	void setGCost(const int gcost) { mGCost = gcost; }
 	void setHCost(const int hcost) { mHCost = hcost; }
 
-	int getFCost() { return mFCost; }
+	int getFCost() { return mGCost + mHCost; }
 	int getGCost() { return mGCost; }
 	int getHCost() { return mHCost; }
-	sf::Vector2f getPosition() { return sf::Vector2f(xGridPosition, yGridPosition); }
+	sf::Vector2i getPosition() { return sf::Vector2i(xGridPosition, yGridPosition); }
 
 	Tile& getNodeImage() { return mTile; }
 
@@ -47,5 +46,4 @@ private:
 	int yGridPosition;
 	int mGCost;
 	int mHCost;
-	int mFCost;
 };

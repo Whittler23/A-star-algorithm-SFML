@@ -16,6 +16,7 @@ public:
 
 	void solveGrid(Grid& grid);
 	void restartSolver();
+	bool getSolved() { return mSolved; }
 
 private:
 	void handleNeighbour(Node* const neighbourNode);

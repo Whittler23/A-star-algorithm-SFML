@@ -15,9 +15,14 @@ public:
 	void draw() const;
 	void processEvents(sf::Event& event, MousePositions& mousePositions);
 
+	bool isButtonPressed(const std::string& buttonName);
+	Button* getButton(const std::string& buttonName);
+	bool getInteracted() { return mInteracted; }
+
 	void init();
 
 private:
 	sf::RenderTarget& mRenderTarget;
-	std::vector<std::unique_ptr<Button>> mButtons;
+	std::map<std::string, std::unique_ptr<Button>> mButtons;
+	bool mInteracted;
 };

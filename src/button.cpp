@@ -4,7 +4,6 @@
 Button::Button(const sf::Vector2f viewSize, const sf::Vector2f percentPosition, const std::string& text)
 	:mButtonState(ButtonState::Idle)
 	, mText(text, sf::Font())
-	, mActive(true)
 {
 	init(percentPosition, viewSize);
 }
@@ -57,9 +56,6 @@ void Button::update()
 
 void Button::processEvents(sf::Event& event, MousePositions& mousePositions)
 {
-	if (!mActive)
-		return;
-
 	switch (event.type)
 	{
 	case sf::Event::MouseMoved:
@@ -88,24 +84,6 @@ void Button::draw(sf::RenderTarget& rt, sf::RenderStates rs) const
 bool Button::isPressed()
 {
 	return (mButtonState == ButtonState::Press);
-}
-
-bool Button::getActive()
-{
-	return mActive;
-}
-
-void Button::setActive(const bool active)
-{
-	mActive = active;
-
-	if (!mActive)
-	{
-		mButtonBox.setFillColor(sf::Color(219, 219, 219, 100)); //light-grey
-		mButtonBox.setOutlineColor(sf::Color(84, 84, 84, 200));
-	}
-	else
-		mButtonBox.setOutlineColor(sf::Color::Black);
 }
 
 sf::Vector2f Button::getPofV(const float percentX, const float percentY, const sf::Vector2f& size)

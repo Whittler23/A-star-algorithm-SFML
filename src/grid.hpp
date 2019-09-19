@@ -23,11 +23,11 @@ public:
 	Node* getStartingNode() { return mStartingNode; }
 	Node* getTargetedNode() { return mTargetedNode; }
 	std::vector<Node*> getNeighbours(Node* const node);
-	Node* getNodeInWorld(const sf::Vector2f);
+	Node* getNodeInWorld(const sf::Vector2i);
 
 private:
 	void createGrid();
-	bool isPositionProper(const sf::Vector2f position);
+	bool isPositionProper(const sf::Vector2i position);
 
 private:
 	int mGridSizeX;

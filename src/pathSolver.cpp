@@ -38,7 +38,7 @@ void PathSolver::solveGrid(Grid& grid)
 		mCurrentNode = mOpenNodes.front();
 
 		for (int i = 1; i < mOpenNodes.size(); ++i)
-			if (mOpenNodes[i]->getFCost() < mCurrentNode->getFCost())
+			if (mOpenNodes[i]->getFCost() < mCurrentNode->getFCost() || mOpenNodes[i]->getFCost() == mCurrentNode->getFCost() && mOpenNodes[i]->getHCost() == mCurrentNode->getHCost())
 				mCurrentNode = mOpenNodes[i];
 
 		for (int i = 0; i < mOpenNodes.size(); ++i)
@@ -70,7 +70,6 @@ void PathSolver::handleNeighbour(Node* const neighbourNode)
 	{
 		neighbourNode->setGCost(movementCostToNeighbour);
 		neighbourNode->setHCost(getDistance(neighbourNode, mTargetNode));
-		neighbourNode->setFCost();
 		neighbourNode->setParentNode(mCurrentNode);
 		if (!isInVector(neighbourNode, mOpenNodes))
 			mOpenNodes.emplace_back(neighbourNode);
@@ -90,11 +89,11 @@ bool PathSolver::isInVector(const Node* const node, const std::vector<Node*>& no
 
 int PathSolver::getDistance(Node* const nodeA, Node* const nodeB)
 {
-	sf::Vector2f nodeAPos = nodeA->getPosition();
-	sf::Vector2f nodeBPos = nodeB->getPosition();
+	sf::Vector2i nodeAPos = nodeA->getPosition();
+	sf::Vector2i nodeBPos = nodeB->getPosition();
 
-	int xDist = static_cast<int>(std::abs(nodeAPos.x - nodeBPos.x));
-	int yDist = static_cast<int>(std::abs(nodeAPos.y - nodeBPos.y));
+	int xDist = std::abs(nodeAPos.x - nodeBPos.x);
+	int yDist = std::abs(nodeAPos.y - nodeBPos.y);
 
 	xDist *= xDist;
 	yDist *= yDist;
@@ -111,4 +110,5 @@ void PathSolver::restartSolver()
 	mGridToSolve = nullptr;
 	mClosedNodes.clear();
 	mOpenNodes.clear();
+	mSolved = false;
 }

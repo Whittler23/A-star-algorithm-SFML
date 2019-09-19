@@ -15,8 +15,6 @@ public:
 	void draw(sf::RenderTarget& rt, sf::RenderStates) const override;
 
 	bool isPressed();
-	bool getActive();
-	void setActive(const bool active);
 
 private:
 	void init(const sf::Vector2f percentPosition, const sf::Vector2f viewSize);
@@ -32,5 +30,4 @@ private:
 	sf::Font mFont;
 	sf::Vector2f mPosition;
 	ButtonState mButtonState;
-	bool mActive;
 };

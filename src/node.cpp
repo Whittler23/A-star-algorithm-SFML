@@ -1,10 +1,10 @@
 #include "node.hpp"
 
-Tile::Tile(const sf::Vector2f& position, const int size)
+Tile::Tile(const sf::Vector2i& position, const int size)
 	:mTileImage(sf::Vector2f(size, size))
 {
 	const float outlineThickness = size / 25.f;
-	mTileImage.setPosition(position);
+	mTileImage.setPosition(sf::Vector2f(position));
 	mTileImage.setOutlineColor(sf::Color::Black);
 	mTileImage.setOutlineThickness(outlineThickness);
 }
@@ -35,14 +35,13 @@ void Tile::reactToNodeType(NodeType nodeType)
 	}
 }
 
-Node::Node(const sf::Vector2f& tilePosition, const int tileSize)
+Node::Node(const sf::Vector2i& tilePosition, const int tileSize)
 	:mTile(tilePosition, tileSize)
 	,mNodeType(NodeType::None)
 	,mParentNode(nullptr)
-	,xGridPosition(tilePosition.x)
-	,yGridPosition(tilePosition.y)
+	,xGridPosition(tilePosition.x+tileSize/2) //setting center of the tile on XAxis
+	,yGridPosition(tilePosition.y+tileSize/2) //setting center of the tile on YAxis
 	,mHCost(0)
-	,mFCost(0)
 	,mGCost(0)
 {
 	mTile.reactToNodeType(mNodeType);
