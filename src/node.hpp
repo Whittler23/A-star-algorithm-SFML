@@ -4,7 +4,7 @@
 
 enum class NodeType
 {
-	StartingNode, TargetedNode, PathNode, ObstacleNode, HoverNode, None
+	StartingNode, TargetedNode, PathNode, ObstacleNode, None
 };
 
 class Tile : public sf::Drawable, public sf::Transformable

@@ -25,10 +25,7 @@ void Tile::reactToNodeType(NodeType nodeType)
 		mTileImage.setFillColor(sf::Color(112, 43, 181)); //purple
 		break;
 	case NodeType::PathNode:
-		mTileImage.setFillColor(sf::Color(33, 87, 222)); //blue
-		break;
-	case NodeType::HoverNode:
-		mTileImage.setFillColor(sf::Color(145, 145, 145));
+		mTileImage.setFillColor(sf::Color(12, 162, 204)); //cyan
 		break;
 	case NodeType::ObstacleNode:
 		mTileImage.setFillColor(sf::Color::Black);
