@@ -13,14 +13,13 @@ public:
 	PathSolver();
 
 	void update();
-	void processEvents(sf::Event& event);
 
 	void solveGrid(Grid& grid);
+	void restartSolver();
 
 private:
 	void handleNeighbour(Node* const neighbourNode);
 	void drawPath();
-	void restartSolver();
 
 	bool isInVector(const Node* const node, const std::vector<Node*>& nodeVector) const;
 	int getDistance(Node* const nodeA, Node* const nodeB);

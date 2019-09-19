@@ -44,7 +44,7 @@ void Application::processEvents()
 	{
 		processApplicationEvents(event);
 		mGrid.processEvents(event, mMousePositions);
-		mPathSolver.processEvents(event);
+		//mGui.processEvents(event, mMousePositions);
 	}
 }
 
@@ -64,6 +64,11 @@ void Application::processApplicationEvents(sf::Event& event)
 	case::sf::Event::KeyPressed:
 		if (event.key.code == sf::Keyboard::F)
 			mPathSolver.solveGrid(mGrid);
+		else if (event.key.code == sf::Keyboard::R)
+		{
+			mGrid.restartGrid();
+			mPathSolver.restartSolver();
+		}
 		else if (event.key.code == sf::Keyboard::Escape)
 			mExit = true;
 	}

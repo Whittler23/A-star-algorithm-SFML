@@ -32,12 +32,6 @@ void Grid::processEvents(sf::Event& event, MousePositions& mousePositions)
 		else if (event.mouseButton.button == sf::Mouse::Right)
 			setTargetedNode(getNodeInWorld(mousePositions.mMouseWorldPosition));
 	} break;
-
-	case sf::Event::KeyPressed:
-	{
-		if (event.key.code == sf::Keyboard::R)
-			restartGrid();
-	} break;
 	}
 }
 

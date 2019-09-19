@@ -15,6 +15,7 @@ public:
 	Grid(int width, int height, int tileSize);
 	void draw(sf::RenderTarget& renderTarget, sf::RenderStates renderStates) const override;
 	void processEvents(sf::Event& event, MousePositions& mousePositions);
+	void restartGrid();
 
 	void setStartingNode(Node* const startingNode);
 	void setTargetedNode(Node* const targetedNode);
@@ -26,7 +27,6 @@ public:
 
 private:
 	void createGrid();
-	void restartGrid();
 	bool isPositionProper(const sf::Vector2f position);
 
 private:

@@ -25,18 +25,6 @@ void PathSolver::drawPath()
 	}
 }
 
-void PathSolver::processEvents(sf::Event& event)
-{
-	switch (event.type)
-	{
-	case sf::Event::KeyPressed:
-	{
-		if (event.key.code == sf::Keyboard::R)
-			restartSolver();
-	}
-	}
-}
-
 void PathSolver::solveGrid(Grid& grid)
 {
 
