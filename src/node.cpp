@@ -39,8 +39,8 @@ Node::Node(const sf::Vector2i& tilePosition, const int tileSize)
 	:mTile(tilePosition, tileSize)
 	,mNodeType(NodeType::None)
 	,mParentNode(nullptr)
-	,xGridPosition(tilePosition.x+tileSize/2) //setting center of the tile on XAxis
-	,yGridPosition(tilePosition.y+tileSize/2) //setting center of the tile on YAxis
+	,xGridPosition(tilePosition.x)
+	,yGridPosition(tilePosition.y)
 	,mHCost(0)
 	,mGCost(0)
 {

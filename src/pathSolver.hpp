@@ -33,5 +33,5 @@ private:
 	Node* mTargetNode;
 	Node* mStartNode;
 	bool mSolved;
-	sf::Clock mT;
+	bool mDrawn;
 };

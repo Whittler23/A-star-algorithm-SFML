@@ -31,6 +31,10 @@ public:
 	void setGCost(const int gcost) { mGCost = gcost; }
 	void setHCost(const int hcost) { mHCost = hcost; }
 
+	//TODO: Add walkable as a bool
+	NodeType getType() { return mNodeType; }
+	bool isWalkable() { return mNodeType != NodeType::ObstacleNode; }
+	Node* getParent() { return mParentNode; }
 	int getFCost() { return mGCost + mHCost; }
 	int getGCost() { return mGCost; }
 	int getHCost() { return mHCost; }

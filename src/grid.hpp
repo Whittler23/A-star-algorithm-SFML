@@ -19,6 +19,7 @@ public:
 
 	void setStartingNode(Node* const startingNode);
 	void setTargetedNode(Node* const targetedNode);
+	void setObstacle(Node* const targetedNode);
 
 	Node* getStartingNode() { return mStartingNode; }
 	Node* getTargetedNode() { return mTargetedNode; }

@@ -30,6 +30,8 @@ void Grid::processEvents(sf::Event& event, MousePositions& mousePositions)
 		if (event.mouseButton.button == sf::Mouse::Left)
 			setStartingNode(getNodeInWorld(sf::Vector2i(mousePositions.mMouseWorldPosition)));
 		else if (event.mouseButton.button == sf::Mouse::Right)
+			setObstacle(getNodeInWorld(sf::Vector2i(mousePositions.mMouseWorldPosition)));
+		else if (event.mouseButton.button == sf::Mouse::Middle)
 			setTargetedNode(getNodeInWorld(sf::Vector2i(mousePositions.mMouseWorldPosition)));
 	} break;
 	}
@@ -56,8 +58,8 @@ bool Grid::isPositionProper(const sf::Vector2i position)
 	int posX = static_cast<int>(position.x);
 	int posY = static_cast<int>(position.y);
 
-	if (posX > mTileSize * mGridSizeX || posX < 0 ||
-		posY > mTileSize* mGridSizeY || posY < 0)
+	if (posX > mTileSize * mGridSizeX + mTileSize|| posX < 0 ||
+		posY > mTileSize* mGridSizeY + mTileSize || posY < 0)
 		return false;
 	else 
 		return true;
@@ -66,6 +68,7 @@ bool Grid::isPositionProper(const sf::Vector2i position)
 std::vector<Node*> Grid::getNeighbours(Node* const node)
 {
 	std::vector<Node*> neighbours;
+	neighbours.reserve(9);
 	for(int i = -1; i <= 1; ++i)
 		for (int b = -1; b <= 1; ++b)
 		{
@@ -74,7 +77,7 @@ std::vector<Node*> Grid::getNeighbours(Node* const node)
 			int nodePositionY = node->getPosition().y + mTileSize * b;
 			if (!isPositionProper(sf::Vector2i(nodePositionX, nodePositionY)))
 				continue;
-
+			//TODO: Fix error on the map borders
 			Node* neighbour = getNodeInWorld(sf::Vector2i(nodePositionX, nodePositionY));
 			neighbours.emplace_back(neighbour);
 		}
@@ -97,6 +100,12 @@ void Grid::setTargetedNode(Node* const targetedNode)
 
 	mTargetedNode = targetedNode;
 	mTargetedNode->setType(NodeType::TargetedNode);
+}
+
+void Grid::setObstacle(Node* const obstacleNode)
+{
+	if(obstacleNode->getType() != NodeType::StartingNode && obstacleNode->getType() != NodeType::TargetedNode)
+		obstacleNode->setType(NodeType::ObstacleNode);
 }
 
 Node* Grid::getNodeInWorld(const sf::Vector2i position)

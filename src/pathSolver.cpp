@@ -1,5 +1,6 @@
 #include "pathSolver.hpp"
 #include "grid.hpp"
+#include <iostream>
 
 PathSolver::PathSolver()
 	:mGridToSolve(nullptr)
@@ -7,22 +8,25 @@ PathSolver::PathSolver()
 	,mTargetNode(nullptr)
 	,mStartNode(nullptr)
 	,mSolved(false)
+	,mDrawn(false)
 {
 }
 
 void PathSolver::update()
 {
-	if (mSolved)
+	if (mSolved && !mDrawn)
 		drawPath();
 }
 
 void PathSolver::drawPath()
 {
-	for (auto& node : mClosedNodes)
+	Node* temp = mCurrentNode->getParent();
+	while (temp != mStartNode)
 	{
-		if (node != mTargetNode && node != mStartNode)
-			node->setType(NodeType::PathNode);
+		temp->setType(NodeType::PathNode);
+		temp = temp->getParent();
 	}
+	mDrawn = true;
 }
 
 void PathSolver::solveGrid(Grid& grid)
@@ -58,7 +62,7 @@ void PathSolver::solveGrid(Grid& grid)
 
 		std::vector<Node*> neighbourNodes = mGridToSolve->getNeighbours(mCurrentNode);
 		for (auto& neighbourNode : neighbourNodes)
-			if (!isInVector(neighbourNode, mClosedNodes))
+			if (!isInVector(neighbourNode, mClosedNodes) && neighbourNode->isWalkable())
 				handleNeighbour(neighbourNode);
 	}
 }
@@ -111,4 +115,5 @@ void PathSolver::restartSolver()
 	mClosedNodes.clear();
 	mOpenNodes.clear();
 	mSolved = false;
+	mDrawn = false;
 }
