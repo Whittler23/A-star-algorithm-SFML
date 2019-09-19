@@ -2,17 +2,19 @@
 
 const int mWidthOfTheGrid = 25;
 const int mHeightOfTheGrid = 17;
-const int mSizeOfTheTiles = 10;
+const int mSizeOfTheTiles = 40;
 
 Application::Application()
 	:mWindow(sf::VideoMode(1600, 900), "AStar")
 	,mGrid(mWidthOfTheGrid, mHeightOfTheGrid, mSizeOfTheTiles)
 	,mExit(false)
+	,mGui(mWindow)
 {
 	float sizeX = mSizeOfTheTiles * mWidthOfTheGrid;
 	float sizeY = mSizeOfTheTiles * mHeightOfTheGrid;
 	sf::FloatRect viewSize = { 0, 0, sizeX, sizeY};
 	mWindow.setView(sf::View(viewSize));
+	mGui.init();
 }
 
 void Application::run()
@@ -28,12 +30,14 @@ void Application::run()
 void Application::update()
 {
 	mPathSolver.update();
+	mGui.update();
 }
 
 void Application::draw()
 {
 	mWindow.clear();
 	mWindow.draw(mGrid);
+	mGui.draw();
 	mWindow.display();
 }
 
@@ -44,7 +48,7 @@ void Application::processEvents()
 	{
 		processApplicationEvents(event);
 		mGrid.processEvents(event, mMousePositions);
-		//mGui.processEvents(event, mMousePositions);
+		mGui.processEvents(event, mMousePositions);
 	}
 }
 

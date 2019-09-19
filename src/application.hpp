@@ -2,14 +2,10 @@
 
 #include "grid.hpp"
 #include "pathSolver.hpp"
+#include "gui.hpp"
+#include "mousePositions.hpp"
 
 #include <SFML/Graphics.hpp>
-
-struct MousePositions
-{
-	sf::Vector2f mMouseWorldPosition;
-	sf::Vector2i mMouseViewPosition;
-};
 
 class Application
 {
@@ -29,6 +25,7 @@ private:
 	sf::RenderWindow mWindow;
 	MousePositions mMousePositions;
 	Grid mGrid;
+	Gui mGui;
 	PathSolver mPathSolver;
 	bool mExit;
 };

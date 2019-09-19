@@ -19,16 +19,16 @@ void Tile::reactToNodeType(NodeType nodeType)
 	switch (nodeType)
 	{
 	case NodeType::StartingNode:
-		mTileImage.setFillColor(sf::Color::Green);
+		mTileImage.setFillColor(sf::Color(84, 184, 94)); //green
 		break;
 	case NodeType::TargetedNode:
-		mTileImage.setFillColor(sf::Color::Red);
+		mTileImage.setFillColor(sf::Color(112, 43, 181)); //purple
 		break;
 	case NodeType::PathNode:
-		mTileImage.setFillColor(sf::Color::Blue);
+		mTileImage.setFillColor(sf::Color(33, 87, 222)); //blue
 		break;
 	case NodeType::HoverNode:
-		mTileImage.setFillColor(sf::Color::Blue);
+		mTileImage.setFillColor(sf::Color(145, 145, 145));
 		break;
 	case NodeType::ObstacleNode:
 		mTileImage.setFillColor(sf::Color::Black);
