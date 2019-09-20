@@ -1,5 +1,5 @@
 #include "button.hpp"
-#include "mousePositions.hpp"
+#include "../mousePositions.hpp"
 
 Button::Button(const sf::Vector2f viewSize, const sf::Vector2f percentPosition, const std::string& text)
 	:mButtonState(ButtonState::Idle)

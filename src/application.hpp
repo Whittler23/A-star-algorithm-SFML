@@ -2,7 +2,7 @@
 
 #include "grid.hpp"
 #include "pathSolver.hpp"
-#include "gui.hpp"
+#include "Gui/gui.hpp"
 #include "mousePositions.hpp"
 
 #include <SFML/Graphics.hpp>

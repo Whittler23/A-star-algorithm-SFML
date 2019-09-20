@@ -30,7 +30,7 @@ void Grid::processEvents(sf::Event& event, MousePositions& mousePositions)
 		if (event.mouseButton.button == sf::Mouse::Left)
 			setStartingNode(getNodeInWorld(sf::Vector2i(mousePositions.mMouseWorldPosition)));
 		else if (event.mouseButton.button == sf::Mouse::Right)
-			setObstacle(getNodeInWorld(sf::Vector2i(mousePositions.mMouseWorldPosition)));
+			handleObstacle(getNodeInWorld(sf::Vector2i(mousePositions.mMouseWorldPosition)));
 		else if (event.mouseButton.button == sf::Mouse::Middle)
 			setTargetedNode(getNodeInWorld(sf::Vector2i(mousePositions.mMouseWorldPosition)));
 	} break;
@@ -111,10 +111,25 @@ void Grid::setTargetedNode(Node* const targetedNode)
 	mTargetedNode->setType(NodeType::TargetedNode);
 }
 
+void Grid::handleObstacle(Node* const obstacleNode)
+{
+	if (obstacleNode->getType() != NodeType::StartingNode && obstacleNode->getType() != NodeType::TargetedNode)
+	{
+		if (obstacleNode->getType() != NodeType::ObstacleNode)
+			setObstacle(obstacleNode);
+		else if (obstacleNode->getType() == NodeType::ObstacleNode)
+			removeObstacle(obstacleNode);
+	}
+}
+
 void Grid::setObstacle(Node* const obstacleNode)
 {
-	if(obstacleNode->getType() != NodeType::StartingNode && obstacleNode->getType() != NodeType::TargetedNode)
-		obstacleNode->setType(NodeType::ObstacleNode);
+	obstacleNode->setType(NodeType::ObstacleNode);
+}
+
+void Grid::removeObstacle(Node* const obstacleNode)
+{
+	obstacleNode->setType(NodeType::None);
 }
 
 Node* Grid::getNodeInWorld(const sf::Vector2i position)
