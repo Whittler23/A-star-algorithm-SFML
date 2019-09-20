@@ -16,6 +16,7 @@ public:
 	void draw(sf::RenderTarget& renderTarget, sf::RenderStates renderStates) const override;
 	void processEvents(sf::Event& event, MousePositions& mousePositions);
 	void restartGrid();
+	void restartObstacles();
 
 	void setStartingNode(Node* const startingNode);
 	void setTargetedNode(Node* const targetedNode);

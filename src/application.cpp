@@ -62,6 +62,8 @@ void Application::processButtons()
 		mPathSolver.solveGrid(mGrid);
 	else if (mGui.isButtonPressed("RESTART"))
 		restart();
+	else if (mGui.isButtonPressed("RESTART_OBSTACLES"))
+		mGrid.restartObstacles();
 }
 
 void Application::processApplicationEvents(sf::Event& event)

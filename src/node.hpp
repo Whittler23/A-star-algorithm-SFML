@@ -38,7 +38,7 @@ public:
 	int getFCost() { return mGCost + mHCost; }
 	int getGCost() { return mGCost; }
 	int getHCost() { return mHCost; }
-	sf::Vector2i getPosition() { return sf::Vector2i(xGridPosition, yGridPosition); }
+	sf::Vector2i getPosition() const { return sf::Vector2i(xGridPosition, yGridPosition); }
 
 	Tile& getNodeImage() { return mTile; }
 

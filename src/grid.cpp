@@ -48,9 +48,18 @@ void Grid::restartGrid()
 {
 	mStartingNode = nullptr;
 	mTargetedNode = nullptr;
-	mNodes.clear();
-	createGrid();
+	for (auto& node : mNodes)
+		if (node->getType() != NodeType::ObstacleNode)
+			node->setType(NodeType::None);
 }
+
+void Grid::restartObstacles()
+{
+	for (auto& node : mNodes)
+		if (node->getType() == NodeType::ObstacleNode)
+			node->setType(NodeType::None);
+}
+
 
 bool Grid::isPositionProper(const sf::Vector2i position)
 {
