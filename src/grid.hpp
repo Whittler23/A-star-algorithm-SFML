@@ -18,20 +18,20 @@ public:
 	void restartGrid();
 	void restartObstacles();
 
-	void setStartingNode(Node* const startingNode);
-	void setTargetedNode(Node* const targetedNode);
-	void handleObstacle(Node* const obstacleNode);
-
 	Node* getStartingNode() { return mStartingNode; }
 	Node* getTargetedNode() { return mTargetedNode; }
 	std::vector<Node*> getNeighbours(Node* const node);
 	Node* getNodeInWorld(const sf::Vector2i);
 
 private:
-	void setObstacle(Node* const obstacleNode);
-	void removeObstacle(Node* const obstacleNode);
 	void createGrid();
 	bool isPositionProper(const sf::Vector2i position);
+	void setStartingNode(Node* const startingNode);
+	void setTargetedNode(Node* const targetedNode);
+	void handleObstacle(Node* const obstacleNode);
+	void setObstacle(Node* const obstacleNode);
+	void removeObstacle(Node* const obstacleNode);
+	bool getNodeToSet();
 
 private:
 	int mGridSizeX;

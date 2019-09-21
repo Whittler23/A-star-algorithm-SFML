@@ -47,6 +47,7 @@ Node::Node(const sf::Vector2i& tilePosition, const int tileSize)
 	mTile.reactToNodeType(mNodeType);
 }
 
+
 void Node::setType(NodeType nodeType)
 {
 	mNodeType = nodeType;

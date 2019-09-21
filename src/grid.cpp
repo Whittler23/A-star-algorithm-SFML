@@ -28,13 +28,28 @@ void Grid::processEvents(sf::Event& event, MousePositions& mousePositions)
 		if (!isPositionProper(sf::Vector2i(mousePositions.mMouseWorldPosition)))
 			return;
 		if (event.mouseButton.button == sf::Mouse::Left)
-			setStartingNode(getNodeInWorld(sf::Vector2i(mousePositions.mMouseWorldPosition)));
+			if(getNodeToSet())
+				setStartingNode(getNodeInWorld(sf::Vector2i(mousePositions.mMouseWorldPosition)));
+			else
+				setTargetedNode(getNodeInWorld(sf::Vector2i(mousePositions.mMouseWorldPosition)));
 		else if (event.mouseButton.button == sf::Mouse::Right)
 			handleObstacle(getNodeInWorld(sf::Vector2i(mousePositions.mMouseWorldPosition)));
-		else if (event.mouseButton.button == sf::Mouse::Middle)
-			setTargetedNode(getNodeInWorld(sf::Vector2i(mousePositions.mMouseWorldPosition)));
+
 	} break;
 	}
+}
+
+bool Grid::getNodeToSet()
+{
+	static bool shouldSetStartingNode;
+	if (!mStartingNode)
+		shouldSetStartingNode = true;
+	else if (!mTargetedNode)
+		shouldSetStartingNode = false;
+	else if (mStartingNode && mTargetedNode)
+		shouldSetStartingNode = !shouldSetStartingNode;
+
+	return shouldSetStartingNode;
 }
 
 void Grid::createGrid()
