@@ -1,4 +1,5 @@
 #include "gui.hpp"
+#include "switchButton.hpp"
 
 Gui::Gui(sf::RenderTarget& renderTarget)
 	:mRenderTarget(renderTarget)
@@ -12,6 +13,7 @@ void Gui::init()
 	mButtons.insert(std::make_pair("RESTART", std::make_unique<Button>(mRenderTarget.getView().getSize(), sf::Vector2f(79.f, 30.f), "RESTART")));
 	mButtons.insert(std::make_pair("RESTART_OBSTACLES", std::make_unique<Button>(mRenderTarget.getView().getSize(), sf::Vector2f(79.f, 50.f), "	RESTART\n OBSTACLES")));
 	mButtons.insert(std::make_pair("EXIT", std::make_unique<Button>(mRenderTarget.getView().getSize(), sf::Vector2f(79.f, 70.f), "EXIT")));
+	mButtons.insert(std::make_pair("DIAG", std::make_unique<SwitchButton>(mRenderTarget.getView().getSize(), sf::Vector2f(84.f, 90.f), "DIAG\n ON")));
 }
 
 void Gui::processEvents(sf::Event& event, MousePositions& mousePositions)

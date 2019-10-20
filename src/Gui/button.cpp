@@ -1,29 +1,40 @@
 #include "button.hpp"
 #include "../mousePositions.hpp"
 
-Button::Button(const sf::Vector2f viewSize, const sf::Vector2f percentPosition, const std::string& text)
+Button::Button(const sf::Vector2f viewSize, const sf::Vector2f percentPosition, const std::string& text, ButtonType buttonType)
 	:mButtonState(ButtonState::Idle)
-	, mText(text, sf::Font())
+	,mText(text, sf::Font())
 {
-	init(percentPosition, viewSize);
+	init(percentPosition, viewSize, buttonType);
 }
 
 Button::~Button()
 {
 }
 
-void Button::init(const sf::Vector2f percentPosition, const sf::Vector2f viewSize)
+void Button::init(const sf::Vector2f percentPosition, const sf::Vector2f viewSize, ButtonType buttonType)
 {
-	
-	mButtonBox.setPosition(getPofV(percentPosition.x, percentPosition.y, viewSize));
-	mButtonBox.setSize(getPofV(20, 15, viewSize));
-	mButtonBox.setOutlineThickness(mButtonBox.getSize().x/40.f);
-	mButtonBox.setOutlineColor(sf::Color::Black);
-
-
 	mFont.loadFromFile("font/defaultFont.ttf");
 	mText.setFont(mFont);
-	mText.setCharacterSize(35);
+
+	switch (buttonType)
+	{
+	case ButtonType::Button:
+		mButtonBox.setPosition(getPofV(percentPosition.x, percentPosition.y, viewSize));
+		mButtonBox.setSize(getPofV(20, 15, viewSize));
+		mButtonBox.setOutlineThickness(mButtonBox.getSize().x / 40.f);
+		mButtonBox.setOutlineColor(sf::Color::Black);
+		mText.setCharacterSize(35);
+		break;
+	case ButtonType::Switch:
+		mButtonBox.setPosition(getPofV(percentPosition.x, percentPosition.y, viewSize));
+		mButtonBox.setSize(getPofV(10, 7, viewSize));
+		mButtonBox.setOutlineThickness(mButtonBox.getSize().x / 40.f);
+		mButtonBox.setOutlineColor(sf::Color::Black);
+		mText.setCharacterSize(28);
+		break;
+	}
+
 	mText.setPosition(getTextPosition());
 }
 
@@ -68,10 +79,13 @@ void Button::processEvents(sf::Event& event, MousePositions& mousePositions)
 
 	case sf::Event::MouseButtonPressed:
 	{
-		if (mButtonState == ButtonState::Hover && sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		if (mButtonState == ButtonState::Hover)
 			mButtonState = ButtonState::Press;
 	} break;
-
+	default:
+	{
+		mButtonState = ButtonState::Idle;
+	}	break;
 	}
 }
 

@@ -7,27 +7,30 @@ struct MousePositions;
 class Button : public sf::Drawable
 {
 public:
-	Button(const sf::Vector2f viewSize, const sf::Vector2f percentPosition, const std::string& text);
+	enum class ButtonState { Idle, Hover, Press };
+	enum class ButtonType { Button, Switch };
+
+	Button(const sf::Vector2f viewSize, const sf::Vector2f percentPosition, const std::string& text, ButtonType buttonType = ButtonType::Button);
 	~Button();
 
-	void update();
+	virtual void update();
 	void processEvents(sf::Event& event, MousePositions& mousePositions);
 	void draw(sf::RenderTarget& rt, sf::RenderStates) const override;
 
 	bool isPressed();
 
-private:
-	void init(const sf::Vector2f percentPosition, const sf::Vector2f viewSize);
 
+private:
+	void init(const sf::Vector2f percentPosition, const sf::Vector2f viewSize, ButtonType buttonType);
 	sf::Vector2f getTextPosition();
 	sf::Vector2f getPofV(const float percentX, const float percentY, const sf::Vector2f& size);
 
-	enum class ButtonState { Idle, Hover, Press };
-
-private:
+protected:
+	ButtonState mButtonState;
 	sf::RectangleShape mButtonBox;
 	sf::Text mText;
+
+private:
 	sf::Font mFont;
 	sf::Vector2f mPosition;
-	ButtonState mButtonState;
 };
