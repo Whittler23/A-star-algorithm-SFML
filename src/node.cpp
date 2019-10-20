@@ -14,7 +14,7 @@ void Tile::draw(sf::RenderTarget& renderTarget, sf::RenderStates renderStates) c
 	renderTarget.draw(mTileImage);
 }
 
-void Tile::reactToNodeType(NodeType nodeType)
+void Tile::changeColor(NodeType nodeType)
 {
 	switch (nodeType)
 	{
@@ -37,19 +37,73 @@ void Tile::reactToNodeType(NodeType nodeType)
 
 Node::Node(const sf::Vector2i& tilePosition, const int tileSize)
 	:mTile(tilePosition, tileSize)
-	,mNodeType(NodeType::None)
 	,mParentNode(nullptr)
+	,mNodeType(NodeType::None)
 	,xGridPosition(tilePosition.x)
 	,yGridPosition(tilePosition.y)
-	,mHCost(0)
 	,mGCost(0)
+	,mHCost(0)
 {
-	mTile.reactToNodeType(mNodeType);
+	mTile.changeColor(mNodeType);
 }
-
 
 void Node::setType(NodeType nodeType)
 {
 	mNodeType = nodeType;
-	mTile.reactToNodeType(mNodeType);
+	mTile.changeColor(mNodeType);
+}
+
+void Node::setParentNode(Node* const parentNode)
+{
+	mParentNode = parentNode; 
+}
+
+void Node::setGCost(const int gcost)
+{ 
+	mGCost = gcost; 
+}
+
+void Node::setHCost(const int hcost)
+{
+	mHCost = hcost;
+}
+
+int Node::getFCost()
+{
+	return mGCost + mHCost;
+}
+
+int Node::getGCost()
+{
+	return mGCost;
+}
+
+int Node::getHCost()
+{
+	return mHCost;
+}
+
+NodeType Node::getType()
+{ 
+	return mNodeType;
+}
+
+Node* Node::getParent()
+{
+	return mParentNode;
+}
+
+bool Node::isWalkable()
+{ 
+	return mNodeType != NodeType::ObstacleNode; 
+}
+
+sf::Vector2i Node::getPosition() const
+{ 
+	return sf::Vector2i(xGridPosition, yGridPosition);
+}
+
+Tile& Node::getNodeImage()
+{
+	return mTile;
 }

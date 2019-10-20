@@ -1,8 +1,8 @@
 #include "application.hpp"
 #include "Gui/switchButton.hpp"
 
-const int mWidthOfTheGrid = 25;
-const int mHeightOfTheGrid = 17;
+const int mWidthOfTheGrid = 32;
+const int mHeightOfTheGrid = 18;
 const int mSizeOfTheTiles = 40;
 
 Application::Application()
@@ -60,19 +60,6 @@ void Application::processEvents()
 	}
 }
 
-void Application::processButtons()
-{
-	if (mGui.isButtonPressed("EXIT"))
-		mExit = true;
-	else if (mGui.isButtonPressed("SOLVE"))
-		mPathSolver.solveGrid(mGrid);
-	else if (mGui.isButtonPressed("RESTART"))
-		restart();
-	else if (mGui.isButtonPressed("RESTART_OBSTACLES"))
-		mGrid.restartObstacles();
-	mGrid.setDiagonal(mGui.getButtonSwitchState("DIAG"));
-}
-
 void Application::processApplicationEvents(sf::Event& event)
 {
 	switch (event.type)
@@ -90,6 +77,20 @@ void Application::processApplicationEvents(sf::Event& event)
 		if (mPathSolver.getSolved() && !mGui.getInteracted())
 			restart();
 	}
+}
+
+void Application::processButtons()
+{
+	if (mGui.isButtonPressed("EXIT"))
+		mExit = true;
+	else if (mGui.isButtonPressed("SOLVE"))
+		mPathSolver.solveGrid(mGrid);
+	else if (mGui.isButtonPressed("RESTART"))
+		restart();
+	else if (mGui.isButtonPressed("RESTART_OBSTACLES"))
+		mGrid.restartObstacles();
+	//TODO: Bump so it's not updated every cycle
+	mGrid.setDiagonal(mGui.getButtonSwitchState("DIAG"));
 }
 
 void Application::restart()

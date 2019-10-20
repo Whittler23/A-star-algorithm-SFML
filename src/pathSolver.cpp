@@ -1,6 +1,8 @@
 #include "pathSolver.hpp"
 #include "grid.hpp"
+
 #include <iostream>
+#include <algorithm>
 
 PathSolver::PathSolver()
 	:mGridToSolve(nullptr)
@@ -16,17 +18,6 @@ void PathSolver::update()
 {
 	if (mSolved && !mDrawn)
 		drawPath();
-}
-
-void PathSolver::drawPath()
-{
-	Node* temp = mCurrentNode->getParent();
-	while (temp != mStartNode)
-	{
-		temp->setType(NodeType::PathNode);
-		temp = temp->getParent();
-	}
-	mDrawn = true;
 }
 
 void PathSolver::solveGrid(Grid& grid)
@@ -67,6 +58,11 @@ void PathSolver::solveGrid(Grid& grid)
 	}
 }
 
+bool PathSolver::isInVector(const Node* const node, const std::vector<Node*>& nodeVector) const
+{
+	return std::find(nodeVector.begin(), nodeVector.end(), node) != nodeVector.end();
+}
+
 void PathSolver::handleNeighbour(Node* const neighbourNode)
 {
 	int movementCostToNeighbour = mCurrentNode->getGCost() + getDistance(neighbourNode, mCurrentNode);
@@ -78,17 +74,6 @@ void PathSolver::handleNeighbour(Node* const neighbourNode)
 		if (!isInVector(neighbourNode, mOpenNodes))
 			mOpenNodes.emplace_back(neighbourNode);
 	}
-
-}
-
-bool PathSolver::isInVector(const Node* const node, const std::vector<Node*>& nodeVector) const
-{
-	for (int i = 0; i < nodeVector.size(); ++i)
-	{
-		if (nodeVector[i] == node)
-			return true;
-	}
-	return false;
 }
 
 int PathSolver::getDistance(Node* const nodeA, Node* const nodeB)
@@ -105,6 +90,16 @@ int PathSolver::getDistance(Node* const nodeA, Node* const nodeB)
 	return static_cast<int>(std::hypot(xDist, yDist));
 }
 
+void PathSolver::drawPath()
+{
+	Node* temp = mCurrentNode->getParent();
+	while (temp != mStartNode)
+	{
+		temp->setType(NodeType::PathNode);
+		temp = temp->getParent();
+	}
+	mDrawn = true;
+}
 
 void PathSolver::restartSolver()
 {

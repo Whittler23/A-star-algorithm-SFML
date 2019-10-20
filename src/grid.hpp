@@ -15,32 +15,35 @@ public:
 	Grid(int width, int height, int tileSize);
 	void draw(sf::RenderTarget& renderTarget, sf::RenderStates renderStates) const override;
 	void processEvents(sf::Event& event, MousePositions& mousePositions);
+
 	void restartGrid();
 	void restartObstacles();
+
 	void setDiagonal(bool set);
 
-	Node* getStartingNode() { return mStartingNode; }
-	Node* getTargetedNode() { return mTargetedNode; }
+	Node* getStartingNode();
+	Node* getTargetedNode();
 	std::vector<Node*> getNeighbours(Node* const node);
-	Node* getNodeInWorld(const sf::Vector2i);
+	Node* getNodeInWorld(int posX, int posY);
 
 private:
 	void createGrid();
-	bool isPositionProper(const sf::Vector2i position);
-	bool shouldIgnore(int val1, int val2);
 	void setStartingNode(Node* const startingNode);
 	void setTargetedNode(Node* const targetedNode);
 	void handleObstacle(Node* const obstacleNode);
 	void setObstacle(Node* const obstacleNode);
 	void removeObstacle(Node* const obstacleNode);
+
+	bool isPositionProper(int posX, int posY);
+	bool shouldIgnore(int val1, int val2);
 	bool getNodeToSet();
 
 private:
-	bool mDiagonalSearch;
-	int mGridSizeX;
-	int mGridSizeY;
-	int mTileSize;
 	std::vector<std::unique_ptr<Node>> mNodes;
 	Node* mStartingNode;
 	Node* mTargetedNode;
+	int mGridSizeX;
+	int mGridSizeY;
+	int mTileSize;
+	bool mDiagonalSearch;
 };

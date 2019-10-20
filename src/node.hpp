@@ -13,7 +13,7 @@ public:
 	Tile(const sf::Vector2i& tilePosition, const int tileSize);
 
 	void draw(sf::RenderTarget& renderTarget, sf::RenderStates renderStates) const override;
-	void reactToNodeType(NodeType nodeType);
+	void changeColor(NodeType nodeType);
 
 private:
 	sf::RectangleShape mTileImage;
@@ -26,28 +26,27 @@ public:
 	Node(const sf::Vector2i& tilePosition, const int tileSize);
 
 	void setType(NodeType nodeType);
+	void setParentNode(Node* const parentNode);
+	void setGCost(const int gcost);
+	void setHCost(const int hcost);
 
-	void setParentNode(Node* const parentNode) { mParentNode = parentNode; }
-	void setGCost(const int gcost) { mGCost = gcost; }
-	void setHCost(const int hcost) { mHCost = hcost; }
+	int getFCost();
+	int getGCost();
+	int getHCost();
+	NodeType getType();
+	Node* getParent();
 
-	//TODO: Add walkable as a bool
-	NodeType getType() { return mNodeType; }
-	bool isWalkable() { return mNodeType != NodeType::ObstacleNode; }
-	Node* getParent() { return mParentNode; }
-	int getFCost() { return mGCost + mHCost; }
-	int getGCost() { return mGCost; }
-	int getHCost() { return mHCost; }
-	sf::Vector2i getPosition() const { return sf::Vector2i(xGridPosition, yGridPosition); }
-
-	Tile& getNodeImage() { return mTile; }
+	bool isWalkable();
+	sf::Vector2i getPosition() const;
+	Tile& getNodeImage();
 
 private:
-	NodeType mNodeType;
-	Node* mParentNode;
 	Tile mTile;
+	Node* mParentNode;
+	NodeType mNodeType;
 	int xGridPosition;
 	int yGridPosition;
 	int mGCost;
 	int mHCost;
+
 };
