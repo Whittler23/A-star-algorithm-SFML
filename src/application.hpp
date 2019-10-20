@@ -15,6 +15,8 @@ public:
 	void run();
 
 private:
+	void init();
+
 	void update();
 	void draw();
 

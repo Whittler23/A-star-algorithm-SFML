@@ -1,4 +1,5 @@
 #include "application.hpp"
+#include "Gui/switchButton.hpp"
 
 const int mWidthOfTheGrid = 25;
 const int mHeightOfTheGrid = 17;
@@ -10,11 +11,16 @@ Application::Application()
 	,mExit(false)
 	,mGui(mWindow)
 {
+	init();
+	mGui.init();
+}
+
+void Application::init()
+{
 	float sizeX = mSizeOfTheTiles * mWidthOfTheGrid;
 	float sizeY = mSizeOfTheTiles * mHeightOfTheGrid;
-	sf::FloatRect viewSize = { 0, 0, sizeX, sizeY};
+	sf::FloatRect viewSize = { 0, 0, sizeX, sizeY };
 	mWindow.setView(sf::View(viewSize));
-	mGui.init();
 }
 
 void Application::run()
@@ -47,8 +53,8 @@ void Application::processEvents()
 	sf::Event event;
 	while (mWindow.pollEvent(event))
 	{
-		processApplicationEvents(event);
 		mGui.processEvents(event, mMousePositions);
+		processApplicationEvents(event);
 		if(!mGui.getInteracted())
 			mGrid.processEvents(event, mMousePositions);
 	}
@@ -64,6 +70,7 @@ void Application::processButtons()
 		restart();
 	else if (mGui.isButtonPressed("RESTART_OBSTACLES"))
 		mGrid.restartObstacles();
+	mGrid.setDiagonal(mGui.getButtonSwitchState("DIAG"));
 }
 
 void Application::processApplicationEvents(sf::Event& event)
@@ -80,7 +87,7 @@ void Application::processApplicationEvents(sf::Event& event)
 		break;
 
 	case sf::Event::MouseButtonPressed:
-		if (mPathSolver.getSolved())
+		if (mPathSolver.getSolved() && !mGui.getInteracted())
 			restart();
 	}
 }

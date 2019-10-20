@@ -17,6 +17,7 @@ public:
 	void processEvents(sf::Event& event, MousePositions& mousePositions);
 	void restartGrid();
 	void restartObstacles();
+	void setDiagonal(bool set);
 
 	Node* getStartingNode() { return mStartingNode; }
 	Node* getTargetedNode() { return mTargetedNode; }
@@ -26,6 +27,7 @@ public:
 private:
 	void createGrid();
 	bool isPositionProper(const sf::Vector2i position);
+	bool shouldIgnore(int val1, int val2);
 	void setStartingNode(Node* const startingNode);
 	void setTargetedNode(Node* const targetedNode);
 	void handleObstacle(Node* const obstacleNode);
@@ -34,6 +36,7 @@ private:
 	bool getNodeToSet();
 
 private:
+	bool mDiagonalSearch;
 	int mGridSizeX;
 	int mGridSizeY;
 	int mTileSize;

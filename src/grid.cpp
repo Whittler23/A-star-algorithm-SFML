@@ -9,6 +9,7 @@ Grid::Grid(int width, int height, int tileSize)
 	,mTileSize(tileSize)
 	,mStartingNode(nullptr)
 	,mTargetedNode(nullptr)
+	,mDiagonalSearch(false)
 {
 	createGrid();
 }
@@ -75,6 +76,10 @@ void Grid::restartObstacles()
 			node->setType(NodeType::None);
 }
 
+void Grid::setDiagonal(bool set)
+{
+	mDiagonalSearch = set;
+}
 
 bool Grid::isPositionProper(const sf::Vector2i position)
 {
@@ -92,20 +97,32 @@ bool Grid::isPositionProper(const sf::Vector2i position)
 std::vector<Node*> Grid::getNeighbours(Node* const node)
 {
 	std::vector<Node*> neighbours;
+
 	neighbours.reserve(9);
 	for(int i = -1; i <= 1; ++i)
-		for (int b = -1; b <= 1; ++b)
+		for (int j = -1; j <= 1; ++j)
 		{
-			if (i == 0 && b == 0) continue;
+			if(shouldIgnore(i, j)) 
+				continue;
 			int nodePositionX = node->getPosition().x + mTileSize * i;
-			int nodePositionY = node->getPosition().y + mTileSize * b;
+			int nodePositionY = node->getPosition().y + mTileSize * j;
 			if (!isPositionProper(sf::Vector2i(nodePositionX, nodePositionY)))
 				continue;
-			//TODO: Fix error on the map borders
 			Node* neighbour = getNodeInWorld(sf::Vector2i(nodePositionX, nodePositionY));
 			neighbours.emplace_back(neighbour);
 		}
 	return neighbours;
+}
+
+bool Grid::shouldIgnore(int val1, int val2)
+{
+	std::vector<std::pair<int, int> > mIgnoredTiles = { {0,0} };
+	if (!mDiagonalSearch)
+		mIgnoredTiles = { {0,0},{-1,-1},{-1,1},{1,1},{1,-1} };
+	for (auto tilePosition : mIgnoredTiles)
+		if (val1 == tilePosition.first && val2 == tilePosition.second)
+			return true;
+	return false;
 }
 
 void Grid::setStartingNode(Node* const startingNode)

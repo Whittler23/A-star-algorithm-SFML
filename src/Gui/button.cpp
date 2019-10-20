@@ -31,7 +31,7 @@ void Button::init(const sf::Vector2f percentPosition, const sf::Vector2f viewSiz
 		mButtonBox.setSize(getPofV(10, 7, viewSize));
 		mButtonBox.setOutlineThickness(mButtonBox.getSize().x / 40.f);
 		mButtonBox.setOutlineColor(sf::Color::Black);
-		mText.setCharacterSize(28);
+		mText.setCharacterSize(23);
 		break;
 	}
 

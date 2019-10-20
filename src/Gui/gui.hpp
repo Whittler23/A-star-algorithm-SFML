@@ -16,6 +16,7 @@ public:
 	void processEvents(sf::Event& event, MousePositions& mousePositions);
 
 	bool isButtonPressed(const std::string& buttonName);
+	bool getButtonSwitchState(const std::string& buttonName);
 	Button* getButton(const std::string& buttonName);
 	bool getInteracted() { return mInteracted; }
 

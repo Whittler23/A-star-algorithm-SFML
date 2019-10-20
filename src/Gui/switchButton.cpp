@@ -22,12 +22,12 @@ void SwitchButton::update()
 	if (mSwitchState)
 	{
 		mButtonBox.setFillColor(sf::Color(55, 128, 74, 190)); //dark-green
-		mText.setString("DIAG\n ON");
+		mText.setString("DIAG ON");
 	}
 	else
 	{
 		mButtonBox.setFillColor(sf::Color(97, 0, 11, 190)); //dark-red
-		mText.setString("DIAG\n OFF");
+		mText.setString("DIAG OFF");
 	}
 }
 
