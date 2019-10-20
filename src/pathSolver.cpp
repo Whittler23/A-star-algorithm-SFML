@@ -48,6 +48,7 @@ void PathSolver::solveGrid(Grid& grid)
 		if (mCurrentNode == mTargetNode)
 		{
 			mSolved = true;
+			mP.init(mCurrentNode, mStartNode);
 			return;
 		}
 
@@ -92,13 +93,8 @@ int PathSolver::getDistance(Node* const nodeA, Node* const nodeB)
 
 void PathSolver::drawPath()
 {
-	Node* temp = mCurrentNode->getParent();
-	while (temp != mStartNode)
-	{
-		temp->setType(NodeType::PathNode);
-		temp = temp->getParent();
-	}
-	mDrawn = true;
+	if (mP.draw())
+		mDrawn = true;
 }
 
 void PathSolver::restartSolver()
@@ -112,3 +108,4 @@ void PathSolver::restartSolver()
 	mSolved = false;
 	mDrawn = false;
 }
+
