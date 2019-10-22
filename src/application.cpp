@@ -1,9 +1,11 @@
 #include "application.hpp"
 #include "Gui/switchButton.hpp"
 
+namespace {
 const int mWidthOfTheGrid = 32;
 const int mHeightOfTheGrid = 18;
 const int mSizeOfTheTiles = 40;
+}
 
 Application::Application()
 	:mWindow(sf::VideoMode(1600, 900), "AStar")
@@ -81,6 +83,8 @@ void Application::processApplicationEvents(sf::Event& event)
 
 void Application::processButtons()
 {
+	if (!mGui.getInteracted())
+		return;
 	if (mGui.isButtonPressed("EXIT"))
 		mExit = true;
 	else if (mGui.isButtonPressed("SOLVE"))

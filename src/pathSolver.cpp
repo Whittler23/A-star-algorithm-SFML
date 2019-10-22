@@ -12,6 +12,9 @@ PathDrawer::PathDrawer()
 
 void PathDrawer::init(Node* targetNode, Node* startNode)
 {
+	mDrawPath.clear();
+	mCounter = 0;
+	mDrawn = false;
 	Node* currentNode = targetNode;
 	while (currentNode != startNode)
 	{
@@ -35,8 +38,6 @@ bool PathDrawer::drawStep()
 	else
 	{
 		mDrawn = true;
-		mDrawPath.clear();
-		mCounter = 0;
 		return true;
 	}
 }
@@ -63,7 +64,7 @@ PathSolver::PathSolver()
 void PathSolver::update()
 {
 	if (mSolved && !mPathDrawer.isDrawn())
-		drawPath();
+		mPathDrawer.drawStep();
 }
 
 void PathSolver::solveGrid(Grid& grid)
@@ -137,12 +138,6 @@ int PathSolver::getDistance(Node* const nodeA, Node* const nodeB)
 	return static_cast<int>(std::hypot(xDist, yDist));
 }
 
-void PathSolver::drawPath()
-{
-	if (mPathDrawer.drawStep())
-		mDrawn = true;
-}
-
 void PathSolver::restartSolver()
 {
 	mCurrentNode = nullptr;
@@ -152,6 +147,5 @@ void PathSolver::restartSolver()
 	mClosedNodes.clear();
 	mOpenNodes.clear();
 	mSolved = false;
-	mDrawn = false;
 }
 

@@ -37,7 +37,6 @@ public:
 
 private:
 	void handleNeighbour(Node* const neighbourNode);
-	void drawPath();
 
 	bool isInVector(const Node* const node, const std::vector<Node*>& nodeVector) const;
 	int getDistance(Node* const nodeA, Node* const nodeB);
