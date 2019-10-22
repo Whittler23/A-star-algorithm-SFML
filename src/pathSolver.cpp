@@ -4,19 +4,65 @@
 #include <iostream>
 #include <algorithm>
 
+PathDrawer::PathDrawer()
+	:mCounter(0)
+	,mDrawn(false)
+{
+}
+
+void PathDrawer::init(Node* targetNode, Node* startNode)
+{
+	Node* currentNode = targetNode;
+	while (currentNode != startNode)
+	{
+		mDrawPath.emplace_back(currentNode);
+		currentNode = currentNode->getParent();
+	}
+	std::reverse(mDrawPath.begin(), mDrawPath.end());
+}
+
+bool PathDrawer::drawStep()
+{
+	if (mDrawClock.getElapsedTime().asSeconds() < 0.05f)
+		return false;
+	if (mDrawPath[mCounter] != mDrawPath.back())
+	{
+		mDrawPath[mCounter]->setType(NodeType::PathNode);
+		mDrawClock.restart();
+		++mCounter;
+		return false;
+	}
+	else
+	{
+		mDrawn = true;
+		mDrawPath.clear();
+		mCounter = 0;
+		return true;
+	}
+}
+
+bool PathDrawer::isDrawn()
+{
+	return mDrawn;
+}
+
+//========================================================
+//			PathDrawer class is used for drawing
+//				a path in a good-looking way
+//========================================================
+
 PathSolver::PathSolver()
 	:mGridToSolve(nullptr)
 	,mCurrentNode(nullptr)
 	,mTargetNode(nullptr)
 	,mStartNode(nullptr)
 	,mSolved(false)
-	,mDrawn(false)
 {
 }
 
 void PathSolver::update()
 {
-	if (mSolved && !mDrawn)
+	if (mSolved && !mPathDrawer.isDrawn())
 		drawPath();
 }
 
@@ -48,7 +94,7 @@ void PathSolver::solveGrid(Grid& grid)
 		if (mCurrentNode == mTargetNode)
 		{
 			mSolved = true;
-			mP.init(mCurrentNode, mStartNode);
+			mPathDrawer.init(mCurrentNode, mStartNode);
 			return;
 		}
 
@@ -93,7 +139,7 @@ int PathSolver::getDistance(Node* const nodeA, Node* const nodeB)
 
 void PathSolver::drawPath()
 {
-	if (mP.draw())
+	if (mPathDrawer.drawStep())
 		mDrawn = true;
 }
 

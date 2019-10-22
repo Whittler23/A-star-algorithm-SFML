@@ -12,41 +12,16 @@ class Node;
 class PathDrawer
 {
 public:
-	PathDrawer()
-		:mCurrentDrawNode(nullptr)
-	{
-
-	}
-
-	void init(Node* start, Node* end)
-	{
-		mCurrentDrawNode = start;
-		mTargetedNode = end;
-	}
-
-	bool draw()
-	{
-		if (mDrawClock.getElapsedTime().asSeconds() < 0.05f) return false;
-		if (mCurrentDrawNode->getParent() != mTargetedNode)
-		{
-			mCurrentDrawNode = mCurrentDrawNode->getParent();
-			mCurrentDrawNode->setType(NodeType::PathNode);
-			mDrawClock.restart();
-			return false;
-		}
-		else
-		{
-			mCurrentDrawNode = nullptr;
-			mTargetedNode = nullptr;
-			return true;
-		}
-	}
-
+	PathDrawer();
+	void init(Node* targetNode, Node* startNode);
+	bool drawStep();
+	bool isDrawn();
 
 private:
-	Node* mCurrentDrawNode;
-	Node* mTargetedNode;
+	std::vector<Node*> mDrawPath;
 	sf::Clock mDrawClock;
+	int mCounter;
+	bool mDrawn;
 };
 
 class PathSolver
@@ -69,12 +44,11 @@ private:
 
 private:
 	Grid* mGridToSolve;
-	PathDrawer mP;
+	PathDrawer mPathDrawer;
 	std::vector<Node*> mOpenNodes;
 	std::vector<Node*> mClosedNodes;
 	Node* mCurrentNode;
 	Node* mTargetNode;
 	Node* mStartNode;
 	bool mSolved;
-	bool mDrawn;
 };
