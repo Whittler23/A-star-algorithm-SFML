@@ -1,7 +1,7 @@
 #include "Gui/informationWindow.hpp"
 
 InformationWindow::InformationWindow()
-	:mBackground(sf::Vector2f(400.f, 60.f))
+	:mBackground(sf::Vector2f(370.f, 60.f))
 	,mInformationText("Computation time taken: no performed", sf::Font())
 {
 	mBackground.setFillColor(sf::Color(20, 18, 18, 150));

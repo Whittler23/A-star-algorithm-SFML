@@ -19,13 +19,13 @@ void Tile::changeColor(NodeType nodeType)
 	switch (nodeType)
 	{
 	case NodeType::StartingNode:
-		mTileImage.setFillColor(sf::Color(84, 184, 94)); //green
+		mTileImage.setFillColor(sf::Color(0, 177, 89)); //green
 		break;
 	case NodeType::TargetedNode:
-		mTileImage.setFillColor(sf::Color(112, 43, 181)); //purple
+		mTileImage.setFillColor(sf::Color(209, 17, 65)); //purple
 		break;
 	case NodeType::PathNode:
-		mTileImage.setFillColor(sf::Color(12, 162, 204)); //cyan
+		mTileImage.setFillColor(sf::Color(0, 174, 219)); //cyan
 		break;
 	case NodeType::ObstacleNode:
 		mTileImage.setFillColor(sf::Color::Black);
