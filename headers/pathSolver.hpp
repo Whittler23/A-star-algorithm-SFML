@@ -34,6 +34,7 @@ public:
 	void solveGrid(Grid& grid);
 	void restartSolver();
 	bool getSolved() { return mSolved; }
+	float getSolveTime() { return mSolveTime.asMilliseconds(); }
 
 private:
 	void handleNeighbour(Node* const neighbourNode);
@@ -49,5 +50,6 @@ private:
 	Node* mCurrentNode;
 	Node* mTargetNode;
 	Node* mStartNode;
+	sf::Time mSolveTime;
 	bool mSolved;
 };

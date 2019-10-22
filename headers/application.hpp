@@ -4,6 +4,7 @@
 #include "pathSolver.hpp"
 #include "Gui/gui.hpp"
 #include "mousePositions.hpp"
+#include "Gui/informationWindow.hpp"
 
 #include <SFML/Graphics.hpp>
 
@@ -28,9 +29,10 @@ private:
 
 private:
 	sf::RenderWindow mWindow;
-	MousePositions mMousePositions;
 	Grid mGrid;
 	Gui mGui;
+	MousePositions mMousePositions;
+	InformationWindow mInformationWindow;
 	PathSolver mPathSolver;
 	bool mExit;
 };

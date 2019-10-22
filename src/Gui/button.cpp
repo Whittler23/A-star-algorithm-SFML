@@ -24,14 +24,14 @@ void Button::init(const sf::Vector2f percentPosition, const sf::Vector2f viewSiz
 		mButtonBox.setSize(getPofV(20, 15, viewSize));
 		mButtonBox.setOutlineThickness(mButtonBox.getSize().x / 40.f);
 		mButtonBox.setOutlineColor(sf::Color::Black);
-		mText.setCharacterSize(35);
+		mText.setCharacterSize(45);
 		break;
 	case ButtonType::Switch:
 		mButtonBox.setPosition(getPofV(percentPosition.x, percentPosition.y, viewSize));
 		mButtonBox.setSize(getPofV(10, 7, viewSize));
 		mButtonBox.setOutlineThickness(mButtonBox.getSize().x / 40.f);
 		mButtonBox.setOutlineColor(sf::Color::Black);
-		mText.setCharacterSize(23);
+		mText.setCharacterSize(30);
 		break;
 	}
 

@@ -69,7 +69,7 @@ void PathSolver::update()
 
 void PathSolver::solveGrid(Grid& grid)
 {
-
+	sf::Clock mSolveClock;
 	mGridToSolve = &grid;
 	mTargetNode = mGridToSolve->getTargetedNode();
 	mStartNode = mGridToSolve->getStartingNode();
@@ -95,6 +95,7 @@ void PathSolver::solveGrid(Grid& grid)
 		if (mCurrentNode == mTargetNode)
 		{
 			mSolved = true;
+			mSolveTime = mSolveClock.getElapsedTime();
 			mPathDrawer.init(mCurrentNode, mStartNode);
 			return;
 		}
@@ -147,5 +148,6 @@ void PathSolver::restartSolver()
 	mClosedNodes.clear();
 	mOpenNodes.clear();
 	mSolved = false;
+	mSolveTime = sf::Time::Zero;
 }
 

@@ -36,20 +36,6 @@ void Application::run()
 	}
 }
 
-void Application::update()
-{
-	mPathSolver.update();
-	mGui.update();
-}
-
-void Application::draw()
-{
-	mWindow.clear();
-	mWindow.draw(mGrid);
-	mGui.draw();
-	mWindow.display();
-}
-
 void Application::processEvents()
 {
 	sf::Event event;
@@ -57,7 +43,7 @@ void Application::processEvents()
 	{
 		mGui.processEvents(event, mMousePositions);
 		processApplicationEvents(event);
-		if(!mGui.getInteracted())
+		if (!mGui.getInteracted())
 			mGrid.processEvents(event, mMousePositions);
 	}
 }
@@ -95,6 +81,23 @@ void Application::processButtons()
 		mGrid.restartObstacles();
 	//TODO: Bump so it's not updated every cycle
 	mGrid.setDiagonal(mGui.getButtonSwitchState("DIAG"));
+}
+
+void Application::update()
+{
+	mPathSolver.update();
+	mGui.update();
+	if(mPathSolver.getSolved())
+		mInformationWindow.update(mPathSolver.getSolveTime());
+}
+
+void Application::draw()
+{
+	mWindow.clear();
+	mWindow.draw(mGrid);
+	mWindow.draw(mInformationWindow);
+	mGui.draw();
+	mWindow.display();
 }
 
 void Application::restart()

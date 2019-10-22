@@ -1,6 +1,7 @@
 #pragma once
 
-#include "button.hpp"
+#include "Gui/button.hpp"
+#include "Gui/informationWindow.hpp"
 
 #include <SFML/Graphics.hpp>
 
