@@ -1,5 +1,5 @@
-#include "switchButton.hpp"
-#include "../mousePositions.hpp"
+#include "Gui/switchButton.hpp"
+#include "mousePositions.hpp"
 
 SwitchButton::SwitchButton(const sf::Vector2f viewSize, const sf::Vector2f percentPosition, const std::string& text)
 	:Button(viewSize, percentPosition, text, ButtonType::Switch)

@@ -1,5 +1,5 @@
-#include "gui.hpp"
-#include "switchButton.hpp"
+#include "Gui/gui.hpp"
+#include "Gui/switchButton.hpp"
 
 Gui::Gui(sf::RenderTarget& renderTarget)
 	:mRenderTarget(renderTarget)

@@ -1,5 +1,5 @@
-#include "button.hpp"
-#include "../mousePositions.hpp"
+#include "Gui/button.hpp"
+#include "mousePositions.hpp"
 
 Button::Button(const sf::Vector2f viewSize, const sf::Vector2f percentPosition, const std::string& text, ButtonType buttonType)
 	:mButtonState(ButtonState::Idle)
@@ -14,7 +14,7 @@ Button::~Button()
 
 void Button::init(const sf::Vector2f percentPosition, const sf::Vector2f viewSize, ButtonType buttonType)
 {
-	mFont.loadFromFile("font/defaultFont.ttf");
+	mFont.loadFromFile("resources/defaultFont.ttf");
 	mText.setFont(mFont);
 
 	switch (buttonType)
@@ -97,7 +97,7 @@ void Button::draw(sf::RenderTarget& rt, sf::RenderStates rs) const
 
 bool Button::isPressed()
 {
-	return (mButtonState == ButtonState::Press);
+	return mButtonState == ButtonState::Press;
 }
 
 sf::Vector2f Button::getPofV(const float percentX, const float percentY, const sf::Vector2f& size)
