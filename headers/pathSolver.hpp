@@ -39,6 +39,7 @@ public:
 private:
 	void handleNeighbour(Node* const neighbourNode);
 
+	bool isGridCorrect();
 	bool isInVector(const Node* const node, const std::vector<Node*>& nodeVector) const;
 	int getDistance(Node* const nodeA, Node* const nodeB);
 

@@ -69,11 +69,14 @@ void PathSolver::update()
 
 void PathSolver::solveGrid(Grid& grid)
 {
-	sf::Clock mSolveClock;
 	mGridToSolve = &grid;
 	mTargetNode = mGridToSolve->getTargetedNode();
 	mStartNode = mGridToSolve->getStartingNode();
+	sf::Clock mSolveClock;
 	mOpenNodes.emplace_back(mStartNode);
+
+	if(!isGridCorrect())
+		return;
 
 	while (mCurrentNode != mTargetNode)
 	{
@@ -105,6 +108,16 @@ void PathSolver::solveGrid(Grid& grid)
 			if (!isInVector(neighbourNode, mClosedNodes) && neighbourNode->isWalkable())
 				handleNeighbour(neighbourNode);
 	}
+}
+
+bool PathSolver::isGridCorrect()
+{
+	if (mStartNode == mTargetNode)
+		throw std::runtime_error("Chosen points are the same!");
+	if (mStartNode == nullptr || mTargetNode == nullptr)
+		return false;
+	else
+		return true;
 }
 
 bool PathSolver::isInVector(const Node* const node, const std::vector<Node*>& nodeVector) const

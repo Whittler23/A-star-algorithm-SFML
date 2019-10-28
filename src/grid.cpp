@@ -109,6 +109,9 @@ void Grid::restartObstacles()
 
 void Grid::setStartingNode(Node* const startingNode)
 {
+	if (startingNode == mTargetedNode)
+		return;	//makes sure that does not overwrite targetedNode
+
 	if (mStartingNode != nullptr)
 		mStartingNode->setType(NodeType::None);
 	mStartingNode = startingNode;
@@ -117,6 +120,9 @@ void Grid::setStartingNode(Node* const startingNode)
 
 void Grid::setTargetedNode(Node * const targetedNode)
 {
+	if (targetedNode == mStartingNode)
+		return;	//makes sure that does not overwrite startingNode
+
 	if (mTargetedNode != nullptr)
 		mTargetedNode->setType(NodeType::None);
 	mTargetedNode = targetedNode;

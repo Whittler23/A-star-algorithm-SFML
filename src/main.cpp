@@ -1,7 +1,9 @@
-#include <iostream>
+#include "application.hpp"
+#include "Gui/errorWindow.hpp"
+
 #include <SFML/Graphics.hpp>
 
-#include "application.hpp"
+#include <iostream>
 
 int main()
 {
@@ -10,9 +12,8 @@ int main()
 
 		app.run();
 	}
-	//TODO: Add popping error window
 	catch (std::runtime_error& e)
 	{
-		std::cout << e.what() << std::endl;
+		showErrorWindow("Error!", e.what());
 	}
 }
