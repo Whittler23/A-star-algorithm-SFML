@@ -34,7 +34,7 @@ public:
 	void solveGrid(Grid& grid);
 	void restartSolver();
 	bool getSolved() { return mSolved; }
-	float getSolveTime() { return mSolveTime.asMilliseconds(); }
+	float getSolveTime() { return mSolveTime.asMicroseconds(); }
 
 private:
 	void handleNeighbour(Node* const neighbourNode);

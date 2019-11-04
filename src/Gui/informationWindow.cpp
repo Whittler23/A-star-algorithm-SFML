@@ -1,4 +1,4 @@
-#include "Gui/informationWindow.hpp"
+﻿#include "Gui/informationWindow.hpp"
 
 InformationWindow::InformationWindow()
 	:mBackground(sf::Vector2f(370.f, 60.f))
@@ -33,5 +33,5 @@ sf::Vector2f InformationWindow::getTextPosition()
 void InformationWindow::update(float time)
 {
 	std::string timeElapsed = std::to_string(static_cast<int>(time));
-	mInformationText.setString("Computation time taken: " + timeElapsed + " ms");
+	mInformationText.setString("Computation time taken: " + timeElapsed + " micro sec");
 }
