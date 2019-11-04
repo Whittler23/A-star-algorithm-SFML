@@ -19,7 +19,7 @@ Every type of tile is represented by specified color:
 
 ## Usage example
 
-By clicking on the grid with LPM, the user can set targeted ( ![#d11141](https://placehold.it/15/d11141/000000?text=+) ) and starting node ( ![#00b159](https://placehold.it/15/00b159/000000?text=+) ) alternately. If both are set, the user can press "SOLVE" button. After that, the program computes the path which can be seen as cyan tiles ( ![#00aedb](https://placehold.it/15/00aedb/000000?text=+) ). In the top left corner, there's a informational window which displays time which was required to perform the calculation.
+By clicking on the grid with LPM, the user can set targeted ( ![#d11141](https://placehold.it/15/d11141/000000?text=+) ) and starting node ( ![#00b159](https://placehold.it/15/00b159/000000?text=+) ) alternately. If both are set, the user can press "SOLVE" button. After that, the program computes the path which can be seen as cyan tiles ( ![#00aedb](https://placehold.it/15/00aedb/000000?text=+) ). In the top left corner, there's an informational window which displays time which was required to perform the calculation.
 
 By pressing the grid with PPM, the user sets the obstacles ( ![#000000](https://placehold.it/15/000000/000000?text=+) ) for the path.
 
