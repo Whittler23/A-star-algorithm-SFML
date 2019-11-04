@@ -1,6 +1,8 @@
 # A* SFML Algorithm
-### Simple grid-based pathfinding
- Algorithm is implemented using C++17 but graphics is made with help of SFML in 2.5.1 version
+ Simple grid-based pathfinding! Algorithm is implemented using C++17 but graphics is made with help of SFML in 2.5.1 version.
+ A* is useful when we need to get a path of an entity to the goal point. Such a situation usually happens in games.
+ 
+ ![Grid screen](https://raw.githubusercontent.com/Whittler23/A-star-algorithm-SFML/master/resources/astarGridScreen.jpg)
  
 ## Demonstration video
 
@@ -29,3 +31,8 @@ And reset the path by pressing "RESET" button.
 
 In the bottom right corner there's a switch button which can change between "DIAG ON" and "DIAG OFF" which means diagonal search on the grid.
 
+## Links I used
+
+[AStar Algorithm Explanation Part 1](https://www.youtube.com/watch?v=-L-WgKMFuhE)\
+[AStar Wikipedia page](https://en.wikipedia.org/wiki/A*_search_algorithm)\
+[A Star (A*) Path Finding C++](https://dev.to/jansonsa/a-star-a-path-finding-c-4a4h)
