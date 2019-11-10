@@ -71,6 +71,7 @@ void Application::processButtons()
 {
 	if (!mGui.getInteracted())
 		return;
+
 	if (mGui.isButtonPressed("EXIT"))
 		mExit = true;
 	else if (mGui.isButtonPressed("SOLVE"))
@@ -79,8 +80,8 @@ void Application::processButtons()
 		restart();
 	else if (mGui.isButtonPressed("RESTART_OBSTACLES"))
 		mGrid.restartObstacles();
-	//TODO: Bump so it's not updated every cycle
-	mGrid.setDiagonal(mGui.getButtonSwitchState("DIAG"));
+	else if (mGui.isButtonPressed("DIAG"))
+		mGrid.setDiagonal(mGui.getButtonSwitchState("DIAG"));
 }
 
 void Application::update()
@@ -94,9 +95,11 @@ void Application::update()
 void Application::draw()
 {
 	mWindow.clear();
+
 	mWindow.draw(mGrid);
 	mWindow.draw(mInformationWindow);
 	mGui.draw();
+
 	mWindow.display();
 }
 

@@ -44,6 +44,11 @@ bool Gui::isButtonPressed(const std::string& buttonName)
 	return mButtons[buttonName]->isPressed();
 }
 
+bool Gui::getInteracted()
+{ 
+	return mInteracted; 
+}
+
 bool Gui::getButtonSwitchState(const std::string& buttonName)
 {
 	return dynamic_cast<SwitchButton*>(mButtons.at(buttonName).get())->getState();

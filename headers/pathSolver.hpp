@@ -33,8 +33,8 @@ public:
 
 	void solveGrid(Grid& grid);
 	void restartSolver();
-	bool getSolved() { return mSolved; }
-	float getSolveTime() { return mSolveTime.asMicroseconds(); }
+	bool getSolved();
+	float getSolveTime();
 
 private:
 	void handleNeighbour(Node* const neighbourNode);

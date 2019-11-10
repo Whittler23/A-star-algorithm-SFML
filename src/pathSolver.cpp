@@ -48,9 +48,6 @@ bool PathDrawer::isDrawn()
 }
 
 //========================================================
-//			PathDrawer class is used for drawing
-//				a path in a good-looking way
-//========================================================
 
 PathSolver::PathSolver()
 	:mGridToSolve(nullptr)
@@ -107,6 +104,12 @@ void PathSolver::solveGrid(Grid& grid)
 		for (auto& neighbourNode : neighbourNodes)
 			if (!isInVector(neighbourNode, mClosedNodes) && neighbourNode->isWalkable())
 				handleNeighbour(neighbourNode);
+
+		if (mSolveClock.getElapsedTime().asMilliseconds() > 1000.f)
+		{
+			restartSolver();
+			return;
+		}
 	}
 }
 
@@ -162,5 +165,15 @@ void PathSolver::restartSolver()
 	mOpenNodes.clear();
 	mSolved = false;
 	mSolveTime = sf::Time::Zero;
+}
+
+bool PathSolver::getSolved()
+{ 
+	return mSolved; 
+}
+
+float PathSolver::getSolveTime()
+{
+	return mSolveTime.asMicroseconds();
 }
 

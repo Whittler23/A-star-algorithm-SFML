@@ -22,7 +22,7 @@ void Tile::changeColor(NodeType nodeType)
 		mTileImage.setFillColor(sf::Color(0, 177, 89)); //green
 		break;
 	case NodeType::TargetedNode:
-		mTileImage.setFillColor(sf::Color(209, 17, 65)); //purple
+		mTileImage.setFillColor(sf::Color(209, 17, 65)); //red
 		break;
 	case NodeType::PathNode:
 		mTileImage.setFillColor(sf::Color(0, 174, 219)); //cyan
